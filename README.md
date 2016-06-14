@@ -104,6 +104,8 @@ sudo chown -R `id -u` /data/db
 **Run your mongoDB server**
 ```bash
 mongod
+or
+C:/MongoDB/Server/3.2/bin/mongod --dbpath C:/MongoDBdata/
 ```
 
 ### Build & Dev
