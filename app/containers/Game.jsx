@@ -21,9 +21,11 @@ class Game extends Component {
 
         return (
             <div className={cx('game')}>
-              <pre>
+
                   data:{this.props.gameObjects.length>0?this.props.gameObjects[0].text :""}
-                  </pre>
+                <br />
+                  user:{this.props.user.authenticated?"yes":"no"}
+                <br />
                 <button className={ cx('button', 'destroy')}
                         onClick={destroyGameObject}
                 >
