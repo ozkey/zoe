@@ -17,8 +17,11 @@ class Game extends Component {
 
     render() {
         const {fetchGameObjects, destroyGameObject,createGameObject } = this.props;
+
+
         return (
             <div className={cx('game')}>
+              
                 <button className={ cx('button', 'destroy')}
                         onClick={destroyGameObject}
                 >
@@ -35,6 +38,7 @@ class Game extends Component {
 }
 
 Game.propTypes = {
+
     gameObjects: PropTypes.array.isRequired,
     destroyGameObject: PropTypes.func.isRequired,
     createGameObject: PropTypes.func.isRequired,
@@ -43,7 +47,7 @@ Game.propTypes = {
 
 function mapStateToProps(state) {
     return {
-        user: state.user,
+
         gameObjects: state.game.gameObjects,
         gameObject: state.game.gameObject
     };

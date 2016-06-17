@@ -15,7 +15,9 @@ export default function game(state = {
     switch (action.type) {
 
         case GET_GAME_OBJECTS:
-            return state;
+            return Object.assign({}, state, {
+                gameObjects: action.data,
+            });
             // return Object.assign({}, state, {
             //     isFetching: true
             // });

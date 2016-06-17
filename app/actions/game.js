@@ -21,7 +21,7 @@ polyfill();
 // Fetch posts logic
 export function fetchGameObjects() {
     console.log("fetchGameObjects");
-    return { type: types.GET_GAME_OBJECTS};//, [{id:1,count:"1",text:"1"}] };
+    return { type: types.GET_GAME_OBJECTS , data:[{id:1,count:"1",text:"1text1"}]};//,  };
 
 
 
