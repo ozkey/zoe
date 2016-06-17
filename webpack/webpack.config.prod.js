@@ -34,8 +34,8 @@ var commonLoaders = [
     test: /\.(png|jpg|jpeg|gif|svg|woff|woff2)$/,
     loader: 'url',
     query: {
-        name: '[hash].[ext]',
-        limit: 10000,
+      name: '[hash].[ext]',
+      limit: 10000,
     }
   },
   { test: /\.css$/,
@@ -110,21 +110,22 @@ module.exports = [
       extensions: ['', '.js', '.jsx', '.css']
     },
     plugins: [
-        // extract inline css from modules into separate files
-        new ExtractTextPlugin("styles/main.css"),
-        new webpack.optimize.UglifyJsPlugin({
-          compressor: {
-            warnings: false
-          }
-        }),
-        new webpack.DefinePlugin({
-          __DEVCLIENT__: false,
-          __DEVSERVER__: false
-        }),
-        new InlineEnviromentVariablesPlugin({ NODE_ENV: 'production' })
+      // extract inline css from modules into separate files
+      new ExtractTextPlugin("styles/main.css"),
+      new webpack.optimize.UglifyJsPlugin({
+        compressor: {
+          warnings: false
+        }
+      }),
+      new webpack.DefinePlugin({
+        __DEVCLIENT__: false,
+        __DEVSERVER__: false
+      }),
+      new InlineEnviromentVariablesPlugin({ NODE_ENV: 'production' })
     ],
     postcss: postCSSConfig
-  }, {
+  },
+  {
     // The configuration for the server-side rendering
     name: "server-side rendering",
     context: path.join(__dirname, "..", "app"),
@@ -149,21 +150,21 @@ module.exports = [
       extensions: ['', '.js', '.jsx', '.css']
     },
     plugins: [
-        // Order the modules and chunks by occurrence.
-        // This saves space, because often referenced modules
-        // and chunks get smaller ids.
-        new webpack.optimize.OccurenceOrderPlugin(),
-        new ExtractTextPlugin("styles/main.css"),
-        new webpack.optimize.UglifyJsPlugin({
-          compressor: {
-            warnings: false
-          }
-        }),
-        new webpack.DefinePlugin({
-          __DEVCLIENT__: false,
-          __DEVSERVER__: false
-        }),
-        new InlineEnviromentVariablesPlugin({ NODE_ENV: 'production' })
+      // Order the modules and chunks by occurrence.
+      // This saves space, because often referenced modules
+      // and chunks get smaller ids.
+      new webpack.optimize.OccurenceOrderPlugin(),
+      new ExtractTextPlugin("styles/main.css"),
+      new webpack.optimize.UglifyJsPlugin({
+        compressor: {
+          warnings: false
+        }
+      }),
+      new webpack.DefinePlugin({
+        __DEVCLIENT__: false,
+        __DEVSERVER__: false
+      }),
+      new InlineEnviromentVariablesPlugin({ NODE_ENV: 'production' })
     ],
     postcss: postCSSConfig
   }

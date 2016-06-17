@@ -6,6 +6,7 @@ import Vote from 'containers/Vote';
 import About from 'containers/About';
 import LoginOrRegister from 'containers/LoginOrRegister';
 import Dashboard from 'containers/Dashboard';
+import Game from 'containers/Game';
 
 /*
  * @param {Redux Store}
@@ -38,6 +39,7 @@ export default (store) => {
       <IndexRoute component={Vote} />
       <Route path="login" component={LoginOrRegister} onEnter={redirectAuth} />
       <Route path="dashboard" component={Dashboard} onEnter={requireAuth} />
+      <Route path="game" component={Game} onEnter={requireAuth} />
       <Route path="about" component={About} />
     </Route>
   );
