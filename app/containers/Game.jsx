@@ -21,7 +21,9 @@ class Game extends Component {
 
         return (
             <div className={cx('game')}>
-              
+              <pre>
+                  data:{this.props.gameObjects.length>0?this.props.gameObjects[0].text :""}
+                  </pre>
                 <button className={ cx('button', 'destroy')}
                         onClick={destroyGameObject}
                 >
@@ -47,7 +49,7 @@ Game.propTypes = {
 
 function mapStateToProps(state) {
     return {
-
+        user: state.user,
         gameObjects: state.game.gameObjects,
         gameObject: state.game.gameObject
     };
