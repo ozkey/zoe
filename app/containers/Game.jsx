@@ -9,6 +9,17 @@ const cx = classNames.bind(styles);
 
 class Game extends Component {
 
+
+    componentDidMount() {
+        console.log("componentDidMount");
+        var socket = require('socket.io-client')('http://localhost:3000');
+        socket.on('news', function (data) {
+            console.log(data);
+            socket.emit('my other event', { my: 'data' });
+        });
+    }
+
+
     //Data that needs to be called before rendering the component
     //This is used for server side rending via the fetchComponentDataBeforeRender() method
     static need = [  // eslint-disable-line
@@ -18,7 +29,7 @@ class Game extends Component {
     render() {
         const {fetchGameObjects, destroyGameObject,createGameObject } = this.props;
 
-
+console.log(this.props.user);
         return (
             <div className={cx('game')}>
 

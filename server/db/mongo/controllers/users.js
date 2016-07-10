@@ -5,6 +5,7 @@ import passport from 'passport';
  * POST /login
  */
 export function login(req, res, next) {
+  console.log("will login ?? maybe ");
   // Do email and password validation for the server
   passport.authenticate('local', (authErr, user, info) => {
     if (authErr) return next(authErr);
@@ -15,8 +16,10 @@ export function login(req, res, next) {
     // logIn()) that can be used to establish a login session
     return req.logIn(user, (loginErr) => {
       if (loginErr) return res.status(401).json({ message: loginErr });
+      console.log("login ok I thin?");
       return res.status(200).json({
-        message: 'You have been successfully logged in.'
+        message: 'You have been successfully logged in.',
+        user
       });
     });
   })(req, res, next);

@@ -51,4 +51,41 @@ routesConfig(app);
  */
 app.get('*', App.default);
 
-app.listen(app.get('port'));
+// app.listen(app.get('port'));
+
+
+
+
+
+
+
+
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
+server.listen(app.get('port'), (error) => {
+  if (!error) {
+    console.log(`GAME is running on port: ${app.get('port')}`); // eslint-disable-line
+  }
+});
+
+io.on('connection', function (socket) {
+  
+  
+  socket.emit('news', { hello: 'world is in io :)' });
+  socket.on('my other event', function (data) {
+    console.log(data);
+  });
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
