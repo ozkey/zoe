@@ -4,6 +4,7 @@ import { ENV } from './config/appConfig';
 import { connect } from './db';
 import passportConfig from './config/passport';
 import expressConfig from './config/express';
+import ioConfig from './config/io';
 import routesConfig from './config/routes';
 import webpackDevConfig from '../webpack/webpack.config.dev-client';
 const App = require('../public/assets/server');
@@ -34,7 +35,7 @@ if (ENV === 'development') {
 /*
  * Bootstrap application settings
  */
-expressConfig(app);
+let session = expressConfig(app);
 
 /*
  * REMOVE if you do not need any routes
@@ -68,14 +69,8 @@ server.listen(app.get('port'), (error) => {
     }
 });
 
-io.on('connection', function (socket) {
+ioConfig(io,session);
 
-
-    socket.emit('news', { hello: 'world is in io :)' });
-    socket.on('my other event', function (data) {
-        console.log(data);
-    });
-});
 
 
 
