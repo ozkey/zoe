@@ -22,13 +22,13 @@ connect();
 passportConfig();
 
 if (ENV === 'development') {
-  const compiler = webpack(webpackDevConfig);
-  app.use(require('webpack-dev-middleware')(compiler, {
-    noInfo: true,
-    publicPath: webpackDevConfig.output.publicPath
-  }));
+    const compiler = webpack(webpackDevConfig);
+    app.use(require('webpack-dev-middleware')(compiler, {
+        noInfo: true,
+        publicPath: webpackDevConfig.output.publicPath
+    }));
 
-  app.use(require('webpack-hot-middleware')(compiler));
+    app.use(require('webpack-hot-middleware')(compiler));
 }
 
 /*
@@ -63,18 +63,18 @@ app.get('*', App.default);
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 server.listen(app.get('port'), (error) => {
-  if (!error) {
-    console.log(`GAME is running on port: ${app.get('port')}`); // eslint-disable-line
-  }
+    if (!error) {
+        console.log(`GAME is running on port: ${app.get('port')}`); // eslint-disable-line
+    }
 });
 
 io.on('connection', function (socket) {
-  
-  
-  socket.emit('news', { hello: 'world is in io :)' });
-  socket.on('my other event', function (data) {
-    console.log(data);
-  });
+
+
+    socket.emit('news', { hello: 'world is in io :)' });
+    socket.on('my other event', function (data) {
+        console.log(data);
+    });
 });
 
 
