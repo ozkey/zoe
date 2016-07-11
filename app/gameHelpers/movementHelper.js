@@ -1,6 +1,6 @@
-module.exports = xyzObjectLocation;
+module.exports = movementHelper;
 
-function xyzObjectLocation (THREE) {
+function movementHelper (THREE) {
     'use strict';
 
     this.rotation = new THREE.Vector3(0, 0, 0);
@@ -32,9 +32,9 @@ function xyzObjectLocation (THREE) {
 
 
     this.move= function () {
-        position.x += this.velocity.x;
-        position.y += this.velocity.y;
-        position.z += this.velocity.z;
+        this.position.x += this.velocity.x;
+        this.position.y += this.velocity.y;
+        this.position.z += this.velocity.z;
     };
 
     this.getPosition = function(){
