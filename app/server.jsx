@@ -67,7 +67,7 @@ export default function render(req, res) {
     const routes = createRoutes(store);
 
 
-    console.log("request email ++++++++++++++++ ",req.user.email);
+//    console.log("request email ++++++++++++++++ ",req.user.email);
 
 
     /*
