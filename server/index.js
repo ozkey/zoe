@@ -70,7 +70,7 @@ server.listen(app.get('port'), (error) => {
 });
 
 
-import GameLoop from './GameLoopClass';
+import GameLoop from './GameLoop';
 
 let gameLoop =  new GameLoop();
 gameLoop.getData();
