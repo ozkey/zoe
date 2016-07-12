@@ -1,6 +1,6 @@
 import deserializeUser from '../db/mongo/passport/deserializeUser';
 
-export default (io,session) => {
+export default (io,session,gameLoop) => {
 
     //console.log("session 2" , session);
 
@@ -25,7 +25,9 @@ export default (io,session) => {
             req.user = user;
         });
 
-        socket.emit('news', { hello: 'world is in io :)' });
+        
+        
+        socket.emit('news', { hello: 'world is in io :) '+gameLoop.getData() });
         socket.on('my other event', function (data) {
             console.log(data);
         });

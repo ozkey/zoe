@@ -69,7 +69,13 @@ server.listen(app.get('port'), (error) => {
     }
 });
 
-ioConfig(io,session);
+
+import GameLoop from './GameLoopClass';
+
+let gameLoop =  new GameLoop();
+gameLoop.getData();
+
+ioConfig(io,session,gameLoop);
 
 
 
