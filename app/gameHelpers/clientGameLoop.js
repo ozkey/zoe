@@ -55,7 +55,7 @@ function clientGameLoop(container){
         renderer.toneMapping = THREE.ReinhardToneMapping;
 
 
-        document.body.appendChild(renderer.domElement);
+        container.appendChild(renderer.domElement);
         scene = new THREE.Scene();
         window.addEventListener( 'resize', onWindowResize, false );
 

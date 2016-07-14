@@ -38,6 +38,11 @@ class Game extends Component {
         clientGameLoop(container);
 
     }
+    componentWillUnmount(){
+        if(window == undefined) return; //client only
+        var container = document.getElementById( 'container' ).innerHTML = "";
+
+    }
 
 
     //Data that needs to be called before rendering the component
@@ -52,8 +57,7 @@ class Game extends Component {
         console.log(this.props.user);
         return (
             <div className={cx('game')}>
-                <div id="container"></div>
-                
+
                 data:{this.props.gameObjects.length>0?this.props.gameObjects[0].text :""}
                 <br />
                 user:{this.props.user.authenticated?"yes":"no"}
@@ -69,7 +73,7 @@ class Game extends Component {
                     createObject
                 </button>
 
-                game:
+                <div id="container"></div>
 
             </div>
         );
