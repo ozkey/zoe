@@ -22,6 +22,7 @@ function clientGameLoop(container){
     var group = new THREE.Group();
 
     var mesh, object , stats;
+    var objects= [];
     var controls;
     var clock = new THREE.Clock();
     
@@ -245,6 +246,35 @@ function clientGameLoop(container){
         mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
     }
 
+
+    function collisionDetect(obj,collidableMeshList){
+
+        // collision detection:
+        //   determines if any of the rays from the cube's origin to each vertex
+        //		intersects any face of a mesh in the array of target meshes
+        //   for increased collision accuracy, add more vertices to the cube;
+        //		for example, new THREE.CubeGeometry( 64, 64, 64, 8, 8, 8, wireMaterial )
+        //   HOWEVER: when the origin of the ray is within the target mesh, collisions do not occur
+        var originPoint = obj.position.clone();
+
+        for (var vertexIndex = 0; vertexIndex < obj.geometry.vertices.length; vertexIndex++)
+        {
+            var localVertex = obj.geometry.vertices[vertexIndex].clone();
+            var globalVertex = localVertex.applyMatrix4( obj.matrix );
+            var directionVector = globalVertex.sub( obj.position );
+            var ray = new THREE.Raycaster( originPoint, directionVector.clone().normalize() );
+            var collisionResults = ray.intersectObjects( collidableMeshList );
+            if ( collisionResults.length > 0 && collisionResults[0].distance < directionVector.length() )
+            {
+                return true;
+            }
+
+        }
+        return false;
+
+
+    }
+
     function init() {
 
         setCamera();
@@ -257,18 +287,27 @@ function clientGameLoop(container){
 
         var materials = new THREE.MeshBasicMaterial( { color: 0xff00ff, wireframe: true, transparent: true, opacity: 1, side: THREE.DoubleSide } ) ;
 
-        var geometry = new THREE.BoxGeometry( 1, 1, 1 );
-        mesh = new THREE.Mesh( geometry, new THREE.MeshNormalMaterial( ) );
-        mesh.position.set( 4, 4, 4 );
-        scene.add( mesh );
-
-
-        object = new THREE.Mesh( new THREE.SphereGeometry( 1, 16, 16 ),  materials );
-        object.position.set( 1, 1, 1 );
+        object = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1 ),  materials );
+        // object = new THREE.Mesh( new THREE.SphereGeometry( 1, 16, 16 ),  materials );
+        object.position.set( 0, 2, 1.1 );
         scene.add( object );
+        objects.push(object);
         console.log(object.geometry.faces[0]);
-
         console.log("ball");
+
+
+
+        var materials = new THREE.MeshBasicMaterial( { color: 0xff00ff, wireframe: true, transparent: true, opacity: 1, side: THREE.DoubleSide } ) ;
+        object = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1 ),  materials );
+        // object = new THREE.Mesh( new THREE.SphereGeometry( 1, 16, 16 ),  materials );
+        object.position.set( 0, 2, 0 );
+        scene.add( object );
+        //objects.push(object);
+        console.log(object.geometry.faces[0]);
+        console.log("ball");
+
+
+
         //
         earth();
         mat();
@@ -291,8 +330,14 @@ function clientGameLoop(container){
 
         requestAnimationFrame( animate );
 
-        mesh.rotation.x += 0.001;
-        object.rotation.x += 0.001;
+
+        object.rotation.x += 0.01;
+
+        if (collisionDetect(object, objects)){
+            console.log("+")
+        }else{
+            console.log("-")
+        }
 
         render();
     }
@@ -303,31 +348,6 @@ function clientGameLoop(container){
 
         camera.lookAt( scene.position );
         camera.updateMatrixWorld();
-
-
-        // find intersections
-        raycaster.setFromCamera( mouse, camera );
-
-//        var intersects = raycaster.intersectObjects( scene.children );
-        var intersects = raycaster.intersectObjects( group.children, true );
-
-        if ( intersects.length > 0 ) {
-            if ( INTERSECTED != intersects[ 0 ].object ) {
-
-                INTERSECTED = intersects[ 0 ].object;
-
-                INTERSECTED.rotation.x += 0.5;
-
-            }
-        } else {
-
-        }
-
-
-
-
-
-
 
 
         var time = Date.now() * 0.0005;
