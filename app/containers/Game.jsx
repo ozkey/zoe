@@ -2,23 +2,10 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import classNames from 'classnames/bind';
 import ClientGameLoop from '../gameHelpers/clientGameLoop';
-
 import { fetchGameObjects, destroyGameObject,createGameObject } from 'actions/game';
 import styles from 'css/components/game';
 
 const cx = classNames.bind(styles);
-
-
-/*
-
-
- <script src="http://localhost:8080/threejs/three.min.js"></script>
- <script src="http://localhost:8080/threejs/examples/js/libs/stats.min.js"></script>
- <script src="http://localhost:8080/threejs/examples/js/libs/dat.gui.min.js"></script>
- <script src="http://localhost:8080/threejs/examples/js/controls/OrbitControls.js"></script>
- <script src="http://localhost:8080/js/vendor/Detector.js"></script>
-
- */
 
 
 class Game extends Component {
