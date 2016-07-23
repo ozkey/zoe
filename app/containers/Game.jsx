@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import classNames from 'classnames/bind';
+import ClientGameLoop from '../gameHelpers/clientGameLoop';
 
 import { fetchGameObjects, destroyGameObject,createGameObject } from 'actions/game';
 import styles from 'css/components/game';
@@ -34,8 +35,9 @@ class Game extends Component {
             socket.emit('my other event', { my: 'data' });
         });
         var container = document.getElementById( 'container' );
-        var clientGameLoop = require('../gameHelpers/clientGameLoop');
-        clientGameLoop(container);
+
+        
+        let clientGameLoop = new ClientGameLoop(container);
 
     }
     componentWillUnmount(){

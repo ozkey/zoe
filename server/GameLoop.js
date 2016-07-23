@@ -1,40 +1,30 @@
 
 var THREE = require('three');
+var Projector = require('../app/gameHelpers/Projector');
+var CanvasRenderer = require('../app/gameHelpers/CanvasRenderer');
 
 
 export default class GameLoop {
 
 
     constructor() {
-        var collidableMeshList =[];
+
+    
+
+        this.renderer = new THREE.CanvasRenderer( );
+        let width = 600;
+        let height = 600;
+
+        this.renderer.setSize(width, height);
+        this.camera = new THREE.PerspectiveCamera( 50, width / height, 0.1, 100 );
+
+        this.collidableMeshList =[];
 
 
         setTimeout(this.theLoop.bind(this), 1000);
 
         this.count = 0;
         this.timePreviousReset = this.getTime();
-
-
-        this.scene = new THREE.Scene();
-        // Cube
-        var geometry = new THREE.BoxGeometry( 20, 20, 20 );
-        var cube = new THREE.Mesh( geometry );
-        // cube.position.y = 10;
-        // cube.position.x = 10;
-        // cube.position.z = 10;
-        this.scene.add( cube );
-        collidableMeshList.push(cube);
-
-
-        var geometry2 = new THREE.BoxGeometry( 20, 20, 20 );
-        var cube2 = new THREE.Mesh( geometry2 );
-        cube2.position.y = 1;
-        this.scene.add( cube2 );
-        collidableMeshList.push(cube2);
-
-
-
-        console.log("collisionDetect" , this.collisionDetect(cube,collidableMeshList));
 
     }
 
@@ -59,7 +49,7 @@ export default class GameLoop {
             {
                 return true;
             }
-            console.log("x");
+
         }
         return false;
 
@@ -70,7 +60,9 @@ export default class GameLoop {
     theLoop(){
         this.count ++;
 
-
+        //requestAnimationFrame();
+        // console.log("collisionDetect" , this.collisionDetect(this.cube,this.collidableMeshList));
+        // this.renderer.render( this.scene, this.camera );
 
         if(this.timePreviousReset +1000 < this.getTime()){
             console.log("frames per second     " + this.count);
@@ -78,6 +70,9 @@ export default class GameLoop {
             this.count = 0;
         }
         setTimeout(this.theLoop.bind(this), 15);
+
+
+
     }
 
 
