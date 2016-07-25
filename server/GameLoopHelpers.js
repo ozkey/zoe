@@ -1,6 +1,6 @@
 let THREE = require('three');
 let Projector = require('../app/gameHelpers/Projector');
-let CanvasRenderer = require('../app/gameHelpers/CanvasRenderer');
+let headlessRenderer = require('../app/gameHelpers/headlessRenderer');
 
 
 export default class GameLoopHelpers {
@@ -16,19 +16,10 @@ export default class GameLoopHelpers {
         this.camera;
         this.scene;
         this.renderer;
-
-        this.raycaster = new THREE.Raycaster();
-        this.mouse = new THREE.Vector2();
         this.INTERSECTED;
-        this.group = new THREE.Group();
-
         this.mesh;
         this.object ;
         this.objects= [];
-
-        this.clock = new THREE.Clock();
-
-        this.bulbLight;
 
         this.init();
         this.animate();
@@ -38,8 +29,6 @@ export default class GameLoopHelpers {
 
 
     setCamera() {
-//        camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 1, 1000);
-//        camera.position.z = 40;
 
         this.camera = new THREE.PerspectiveCamera( 50, this.width / this.height, 0.1, 100 );
         this.camera.position.x = -4;
@@ -49,8 +38,8 @@ export default class GameLoopHelpers {
 
     setup() {
 
-        this.renderer = new THREE.CanvasRenderer( );
-        this.renderer.setSize(this.width, this.height);
+        this.renderer = new THREE.headlessRenderer( );
+        //this.renderer.setSize(this.width, this.height);
         this.scene = new THREE.Scene();
 
     }
