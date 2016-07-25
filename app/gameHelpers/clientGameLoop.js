@@ -4,7 +4,7 @@
 module.exports = clientGameLoop;
 function clientGameLoop(container){
 
-
+    var performance = false;
     var THREE = require('three');
     var Stats = require('../../node_modules/three/examples/js/libs/stats.min');
     var gui = require('../../node_modules/three/examples/js/libs/dat.gui.min');
@@ -348,6 +348,22 @@ function clientGameLoop(container){
 
         camera.lookAt( scene.position );
         camera.updateMatrixWorld();
+
+
+        // find intersections
+        raycaster.setFromCamera( mouse, camera );
+//        var intersects = raycaster.intersectObjects( scene.children );
+        var intersects = raycaster.intersectObjects( group.children, true );
+        if ( intersects.length > 0 ) {
+            if ( INTERSECTED != intersects[ 0 ].object ) {
+                INTERSECTED = intersects[ 0 ].object;
+                INTERSECTED.rotation.x += 0.5;
+            }
+        } else {
+
+        }
+
+        
 
 
         var time = Date.now() * 0.0005;

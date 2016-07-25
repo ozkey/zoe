@@ -22,7 +22,15 @@ var document = {
             context.fillRect = function(){return{} };
             context.setTransform = function(){return{} };
             context.translate = function(){return{} };
+            context.beginPath = function(){ };
+            context.moveTo = function(){ };
+            context.lineTo = function(){ };
+            context.closePath = function(){ };
+            context.fill = function(){ };
+            context.stroke = function(){ };
+
             canvas.getContext = function(){return context };
+
             return canvas;
         }
     }

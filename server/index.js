@@ -10,6 +10,8 @@ import webpackDevConfig from '../webpack/webpack.config.dev-client';
 const App = require('../public/assets/server');
 const app = express();
 
+GLOBAL.performance = false;
+
 /*
  * Database-specific setup
  * - connect to MongoDB using mongoose
