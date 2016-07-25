@@ -1,6 +1,5 @@
 let THREE = require('three');
 let Projector = require('../app/gameHelpers/Projector');
-let headlessRenderer = require('../app/gameHelpers/headlessRenderer');
 
 
 export default class GameLoopHelpers {
@@ -38,8 +37,6 @@ export default class GameLoopHelpers {
 
     setup() {
 
-        this.renderer = new THREE.headlessRenderer( );
-        //this.renderer.setSize(this.width, this.height);
         this.scene = new THREE.Scene();
 
     }
@@ -108,7 +105,8 @@ export default class GameLoopHelpers {
 
         this.camera.lookAt( this.scene.position );
         this.camera.updateMatrixWorld();
-        this.renderer.render( this.scene, this.camera );
+        this.scene.updateMatrixWorld();
+
 
     }
 
