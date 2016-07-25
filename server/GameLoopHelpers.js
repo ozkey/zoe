@@ -1,111 +1,62 @@
-var THREE = require('three');
-var Projector = require('../app/gameHelpers/Projector');
+let THREE = require('three');
+let Projector = require('../app/gameHelpers/Projector');
+let CanvasRenderer = require('../app/gameHelpers/CanvasRenderer');
+
+
+export default class GameLoopHelpers {
+
+
+    constructor() {
+
+
+        this.width = 600;
+        this.height = 600;
+
+
+        this.camera;
+        this.scene;
+        this.renderer;
+
+        this.raycaster = new THREE.Raycaster();
+        this.mouse = new THREE.Vector2();
+        this.INTERSECTED;
+        this.group = new THREE.Group();
+
+        this.mesh;
+        this.object ;
+        this.objects= [];
+
+        this.clock = new THREE.Clock();
+
+        this.bulbLight;
+
+        this.init();
+        this.animate();
+
+    }
 
 
 
-
-
-module.exports = gameLoopHelpers;
-function gameLoopHelpers(){
-
-
-
-    var CanvasRenderer = require('../app/gameHelpers/CanvasRenderer');
-
-    // var Detector = require('../gameHelpers/Detector');
-
-    let width = 600;
-    let height = 600;
-
-
-    var camera, scene, renderer;
-
-    var raycaster = new THREE.Raycaster();
-    var mouse = new THREE.Vector2();
-    var INTERSECTED;
-    var group = new THREE.Group();
-
-    var mesh, object ;
-    var objects= [];
-    var controls;
-    var clock = new THREE.Clock();
-    
-    var bulbLight;
-
-    init();
-    animate();
-
-
-
-    function setCamera() {
+    setCamera() {
 //        camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 1, 1000);
 //        camera.position.z = 40;
 
-        camera = new THREE.PerspectiveCamera( 50, width / height, 0.1, 100 );
-        camera.position.x = -4;
-        camera.position.z = 4;
-        camera.position.y = 3;
+        this.camera = new THREE.PerspectiveCamera( 50, this.width / this.height, 0.1, 100 );
+        this.camera.position.x = -4;
+        this.camera.position.z = 4;
+        this.camera.position.y = 3;
     }
 
-    function setup() {
+    setup() {
 
-        renderer = new THREE.CanvasRenderer( );
-        
-
-        // renderer = new THREE.WebGLRenderer();
-        // renderer.setPixelRatio(window.devicePixelRatio);
-        renderer.setSize(width, height);
-
-
-        // renderer.physicallyCorrectLights = true;
-        // renderer.gammaInput = true;
-        // renderer.gammaOutput = true;
-        // renderer.shadowMap.enabled = true;
-        // renderer.toneMapping = THREE.ReinhardToneMapping;
-
-
-        // container.appendChild(renderer.domElement);
-        scene = new THREE.Scene();
-        // window.addEventListener( 'resize', onWindowResize, false );
+        this.renderer = new THREE.CanvasRenderer( );
+        this.renderer.setSize(this.width, this.height);
+        this.scene = new THREE.Scene();
 
     }
 
-    function lights() {
-        var bulbGeometry = new THREE.SphereGeometry(.05, 16, 8);
-        bulbLight = new THREE.PointLight(0xffee88, 1, 100, 2);
-        var bulbMat = new THREE.MeshStandardMaterial({
-            emissive: 0xffffee,
-            emissiveIntensity: 50,
-            color: 0x000000
-        });
-        bulbLight.add(new THREE.Mesh(bulbGeometry, bulbMat));
-        bulbLight.position.set(0, 0, 0);
-        bulbLight.castShadow = true;
-        scene.add(bulbLight);
 
-        var hemiLight = new THREE.HemisphereLight(0xddeeff, 0x0f0e0d, 0.045);
-        scene.add(hemiLight);
-
-
-//        scene.fog = new THREE.Fog( 0x050505, 10, 10 );
-    }
-
-
-
-
-
-
-
-
-
-    // function onDocumentMouseMove( event ) {
-    //     event.preventDefault();
-    //     mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
-    //     mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
-    // }
-
-
-    function collisionDetect(obj,collidableMeshList){
+    collisionDetect(obj,collidableMeshList){
 
         // collision detection:
         //   determines if any of the rays from the cube's origin to each vertex
@@ -133,11 +84,11 @@ function gameLoopHelpers(){
 
     }
 
-    function init() {
+    init() {
 
-        setCamera();
-        setup();
-        lights();
+        this.setCamera();
+        this.setup();
+
 
 
 
@@ -145,87 +96,46 @@ function gameLoopHelpers(){
 
         var materials = new THREE.MeshBasicMaterial( { color: 0xff00ff, wireframe: true, transparent: true, opacity: 1, side: THREE.DoubleSide } ) ;
 
-        object = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1 ),  materials );
+        this.object = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1 ),  materials );
         // object = new THREE.Mesh( new THREE.SphereGeometry( 1, 16, 16 ),  materials );
-        object.position.set( 0, 2, 1.1 );
-        scene.add( object );
-        objects.push(object);
-        console.log(object.geometry.faces[0]);
+        this.object.position.set( 0, 2, 1.1 );
+        this.scene.add( this.object );
+        this.objects.push(this.object);
         console.log("ball");
-
 
 
         var materials = new THREE.MeshBasicMaterial( { color: 0xff00ff, wireframe: true, transparent: true, opacity: 1, side: THREE.DoubleSide } ) ;
-        object = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1 ),  materials );
+        this.object = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1 ),  materials );
         // object = new THREE.Mesh( new THREE.SphereGeometry( 1, 16, 16 ),  materials );
-        object.position.set( 0, 2, 0 );
-        scene.add( object );
-        //objects.push(object);
-        console.log(object.geometry.faces[0]);
+        this.object.position.set( 0, 2, 0 );
+        this.scene.add( this.object );
         console.log("ball");
-
-
-
-
-
 
     }
 
-    // function onWindowResize() {
-    //
-    //     camera.aspect = window.innerWidth / window.innerHeight;
-    //     camera.updateProjectionMatrix();
-    //
-    //     renderer.setSize( window.innerWidth, window.innerHeight );
-    //
-    // }
 
-    function animate() {
+    render() {
 
-        object.rotation.x += 0.01;
-        if (collisionDetect(object, objects)){
+
+        this.camera.lookAt( this.scene.position );
+        this.camera.updateMatrixWorld();
+        this.renderer.render( this.scene, this.camera );
+
+    }
+
+    animate() {
+
+        this.object.rotation.x += 0.01;
+        if (this.collisionDetect(this.object, this.objects)){
             console.log("+")
         }else{
             console.log("-")
         }
 
-        render();
+        this.render();
     }
-
-
-    function render() {
-
-
-        camera.lookAt( scene.position );
-        camera.updateMatrixWorld();
-
-
-        // find intersections
-        raycaster.setFromCamera( mouse, camera );
-//        var intersects = raycaster.intersectObjects( scene.children );
-        var intersects = raycaster.intersectObjects( group.children, true );
-        if ( intersects.length > 0 ) {
-            if ( INTERSECTED != intersects[ 0 ].object ) {
-                INTERSECTED = intersects[ 0 ].object;
-                INTERSECTED.rotation.x += 0.5;
-            }
-        } else {
-
-        }
-
-        
-
-
-        var time = Date.now() * 0.0005;
-        var delta = clock.getDelta();
-        bulbLight.position.y = Math.cos( time ) * 0.75 + 1.25;
-        bulbLight.position.x = Math.sin( time ) * 0.75 + 1.25;
-
-        renderer.render( scene, camera );
-        
-    }
-
-
 
 
 }
+
+
