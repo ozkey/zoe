@@ -7,18 +7,12 @@ export default class GameLoopHelpers {
 
     constructor() {
 
-
-        this.width = 600;
-        this.height = 600;
-
-
         this.camera;
         this.scene;
         this.renderer;
-        this.INTERSECTED;
-        this.mesh;
         this.object ;
-        this.objects= [];
+        this.objects3D;
+        this.objects3D = [];
 
         this.init();
         this.animate();
@@ -86,7 +80,7 @@ export default class GameLoopHelpers {
         // object = new THREE.Mesh( new THREE.SphereGeometry( 1, 16, 16 ),  materials );
         this.object.position.set( 0, 2, 1.1 );
         this.scene.add( this.object );
-        this.objects.push(this.object);
+        this.objects3D.push(this.object);
         console.log("ball");
 
 
@@ -113,7 +107,7 @@ export default class GameLoopHelpers {
     animate() {
 
         this.object.rotation.x += 0.01;
-        if (this.collisionDetect(this.object, this.objects)){
+        if (this.collisionDetect(this.object, this.objects3D)){
             console.log("+")
         }else{
             console.log("-")
