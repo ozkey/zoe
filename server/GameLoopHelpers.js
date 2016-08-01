@@ -13,26 +13,10 @@ export default class GameLoopHelpers {
         this.object ;
         this.objects3D;
         this.objects3D = [];
-
-        this.init();
-        this.animate();
-
-    }
-
-
-
-    setCamera() {
-
-        this.camera = new THREE.PerspectiveCamera( 50, this.width / this.height, 0.1, 100 );
-        this.camera.position.x = -4;
-        this.camera.position.z = 4;
-        this.camera.position.y = 3;
-    }
-
-    setup() {
-
         this.scene = new THREE.Scene();
 
+        this.createObjects();
+        
     }
 
 
@@ -57,22 +41,11 @@ export default class GameLoopHelpers {
             {
                 return true;
             }
-
         }
         return false;
-
-
     }
 
-    init() {
-
-        this.setCamera();
-        this.setup();
-
-
-
-
-        //==================
+    createObjects() {
 
         var materials = new THREE.MeshBasicMaterial( { color: 0xff00ff, wireframe: true, transparent: true, opacity: 1, side: THREE.DoubleSide } ) ;
 
@@ -94,29 +67,15 @@ export default class GameLoopHelpers {
     }
 
 
-    render() {
-
-
-        this.camera.lookAt( this.scene.position );
-        this.camera.updateMatrixWorld();
-        this.scene.updateMatrixWorld();
-
-
-    }
-
     animate() {
-
+        this.scene.updateMatrixWorld();
         this.object.rotation.x += 0.01;
         if (this.collisionDetect(this.object, this.objects3D)){
             console.log("+")
         }else{
             console.log("-")
         }
-
-        this.render();
     }
-
-
 }
 
 
