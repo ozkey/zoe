@@ -35,14 +35,15 @@ class Game extends Component {
             socket.emit('my other event', { my: 'data' });
         });
         var container = document.getElementById( 'container' );
-
-        
-        let clientGameLoop = new ClientGameLoop(container);
+        this.clientGameLoop = new ClientGameLoop(container);
 
     }
     componentWillUnmount(){
+        console.log("delete game");
         if(window == undefined) return; //client only
         var container = document.getElementById( 'container' ).innerHTML = "";
+        console.log("delete game");
+        delete this.clientGameLoop;
 
     }
 
