@@ -38,8 +38,7 @@ class Game extends Component {
         });
 
         socket.on('tick',  (data) => {
-            console.log("tick tock");
-            this.clientGameLoop.animate()
+            this.clientGameLoop.animate(data)
         });
 
 

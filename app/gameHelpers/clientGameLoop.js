@@ -52,7 +52,8 @@ export default class clientGameLoop {
         window.addEventListener( 'resize', this.onWindowResize, false );
 
         this.init();
-        this.animate();
+
+        this.animateLocal();
     }
 
     render() {
@@ -185,23 +186,21 @@ export default class clientGameLoop {
 
     }
 
-    animate() {
-        requestAnimationFrame(this.animateMove.bind(this));
+    animateLocal(){
+        requestAnimationFrame( this.animateLocal.bind(this) );
+        this.render();
 
-
+        console.log("render?");
     }
-    animateMove() {
-
-
+    animate(data) {
+        console.log("tick tock 2");
         this.object.rotation.x += 0.01;
-
         if (this.collisionDetect(this.object, this.objects)){
             console.log("+")
         }else{
             console.log("-")
         }
 
-        this.render();
     }
 
     lights() {
