@@ -186,7 +186,12 @@ export default class clientGameLoop {
     }
 
     animate() {
-        requestAnimationFrame( this.animate.bind(this) );
+        requestAnimationFrame(this.animateMove.bind(this));
+
+
+    }
+    animateMove() {
+
 
         this.object.rotation.x += 0.01;
 

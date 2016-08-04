@@ -12,6 +12,9 @@ export default (io,session,gameLoop) => {
     });
 
 
+    gameLoop.setTickFunction(()=>{
+        io.emit('tick', {} ); // short form
+    });
 
 
 

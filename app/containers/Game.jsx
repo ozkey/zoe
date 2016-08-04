@@ -28,14 +28,21 @@ class Game extends Component {
         console.log("componentDidMount");
 
         if(window == undefined) return; //client only
+        var container = document.getElementById( 'container' );
+        this.clientGameLoop = new ClientGameLoop(container);
 
         var socket = require('socket.io-client')('http://localhost:3000');
         socket.on('news', function (data) {
             console.log(data);
             socket.emit('my other event', { my: 'data' });
         });
-        var container = document.getElementById( 'container' );
-        this.clientGameLoop = new ClientGameLoop(container);
+
+        socket.on('tick',  (data) => {
+            console.log("tick tock");
+            this.clientGameLoop.animate()
+        });
+
+
 
     }
     componentWillUnmount(){

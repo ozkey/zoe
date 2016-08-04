@@ -10,14 +10,17 @@ export default class GameLoop {
         setTimeout(this.theLoop.bind(this), 1000);
 
         this.timePreviousReset = 0;
-   
+        this.tickFunction = () => { console.log("tick")};
     }
 
- 
+
+    setTickFunction(func){
+        this.tickFunction = func;
+    }
 
     theLoop(){
         this.count ++;
-
+        this.tickFunction();
 
         this.gameLoopHelpers.animate();
 
@@ -27,7 +30,7 @@ export default class GameLoop {
             this.count = 0;
 
         }
-        setTimeout(this.theLoop.bind(this), 15);
+        setTimeout(this.theLoop.bind(this), 40);
 
 
 
