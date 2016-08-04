@@ -13,6 +13,8 @@ export default class clientGameLoop {
         let OrbitControls = require('../gameHelpers/OrbitControls');
         let Detector = require('../gameHelpers/Detector');
 
+        this.destroyed = false; //to stop frame animation
+
         this.container = obj;
         this.camera;
         this.scene;
@@ -186,19 +188,21 @@ export default class clientGameLoop {
 
     }
 
+    destroy(){
+        this.destroyed = true;
+    }
     animateLocal(){
-        requestAnimationFrame( this.animateLocal.bind(this) );
+        if(!this.destroyed) requestAnimationFrame( this.animateLocal.bind(this) );
         this.render();
-
-        console.log("render?");
+        // console.log("render?");
     }
     animate(data) {
-        console.log("tick tock 2");
+        // console.log("tick tock 2");
         this.object.rotation.x += 0.01;
         if (this.collisionDetect(this.object, this.objects)){
-            console.log("+")
+            // console.log("+")
         }else{
-            console.log("-")
+            // console.log("-")
         }
 
     }

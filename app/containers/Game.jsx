@@ -31,13 +31,14 @@ class Game extends Component {
         var container = document.getElementById( 'container' );
         this.clientGameLoop = new ClientGameLoop(container);
 
-        var socket = require('socket.io-client')('http://localhost:3000');
-        socket.on('news', function (data) {
+        this.socket = require('socket.io-client')('http://localhost:3000');
+        this.socket.on('news', function (data) {
             console.log(data);
-            socket.emit('my other event', { my: 'data' });
-        });
+            this.socket.emit('my other event', { my: 'data' });
+        }.bind(this)
+        )
 
-        socket.on('tick',  (data) => {
+        this.socket.on('tick',  (data) => {
             this.clientGameLoop.animate(data)
         });
 
@@ -48,8 +49,12 @@ class Game extends Component {
         console.log("delete game");
         if(window == undefined) return; //client only
         var container = document.getElementById( 'container' ).innerHTML = "";
-        console.log("delete game");
+        console.log("close game");
+        // this.socket.emit('close');
+        this.socket.close();
+        this.clientGameLoop.destroy();
         delete this.clientGameLoop;
+
 
     }
 

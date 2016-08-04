@@ -28,7 +28,9 @@ export default (io,session,gameLoop) => {
             req.user = user;
         });
 
-        
+        socket.on('close', function (data) {
+            socket.disconnect(0);
+        });
         
         socket.emit('news', { hello: 'world is in io :) '+gameLoop.getData() });
         socket.on('my other event', function (data) {
