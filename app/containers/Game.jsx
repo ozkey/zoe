@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import classNames from 'classnames/bind';
-import ClientGameLoop from '../gameHelpers/clientGameLoop';
+import GameLoopClient from './GameLoopClient';
 
 import { fetchGameObjects, destroyGameObject,createGameObject } from 'actions/game';
 import styles from 'css/components/game';
@@ -29,7 +29,7 @@ class Game extends Component {
 
         if(window == undefined) return; //client only
         var container = document.getElementById( 'container' );
-        this.clientGameLoop = new ClientGameLoop(container);
+        this.gameLoopClient = new GameLoopClient(container);
 
         this.socket = require('socket.io-client')('http://localhost:3000');
         this.socket.on('news', function (data) {
@@ -39,7 +39,7 @@ class Game extends Component {
         )
 
         this.socket.on('tick',  (data) => {
-            this.clientGameLoop.animate(data)
+            this.gameLoopClient.animate(data)
         });
 
 
@@ -52,8 +52,8 @@ class Game extends Component {
         console.log("close game");
         // this.socket.emit('close');
         this.socket.close();
-        this.clientGameLoop.destroy();
-        delete this.clientGameLoop;
+        this.gameLoopClient.destroy();
+        delete this.gameLoopClient;
 
 
     }

@@ -1,7 +1,7 @@
 let THREE = require('three');
 let Stats = require('../../node_modules/three/examples/js/libs/stats.min');
 
-export default class clientGameLoop {
+export default class GameLoopClient {
 
 
 
@@ -181,7 +181,7 @@ export default class clientGameLoop {
             ballMat.needsUpdate = true;
         });
 
-        var ballGeometry = new THREE.SphereGeometry(0.1213, 32, 32);
+        var ballGeometry = new THREE.SphereGeometry(1, 32, 32);
 
 
 
@@ -247,8 +247,11 @@ export default class clientGameLoop {
         this.bulbLight.castShadow = true;
         this.scene.add(this.bulbLight);
 
-        var hemiLight = new THREE.HemisphereLight(0xddeeff, 0x0f0e0d, 0.045);
-        this.scene.add(hemiLight);
+        // var hemiLight = new THREE.HemisphereLight(0xddeeff, 0x0f0e0d, 0.045);
+        // this.scene.add(hemiLight);
+
+        var light = new THREE.AmbientLight( 0x404040 ); // soft white light
+        this.scene.add( light );
 
 
 //        scene.fog = new THREE.Fog( 0x050505, 10, 10 );
