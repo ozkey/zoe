@@ -30,7 +30,7 @@ export default class GameLoop {
             this.count = 0;
 
         }
-        setTimeout(this.theLoop.bind(this), 40);
+        setTimeout(this.theLoop.bind(this), 50);
 
 
 

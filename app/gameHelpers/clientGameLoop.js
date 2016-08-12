@@ -6,8 +6,6 @@ export default class clientGameLoop {
 
 
     constructor(obj) {
-        let performance = false;
-
 
         let gui = require('../../node_modules/three/examples/js/libs/dat.gui.min');
         let OrbitControls = require('../gameHelpers/OrbitControls');
@@ -16,32 +14,63 @@ export default class clientGameLoop {
         this.destroyed = false; //to stop frame animation
 
         this.container = obj;
+
+        this.stats;
+        this.clock = new THREE.Clock();
+
         this.camera;
         this.scene;
         this.renderer;
-
-        this.raycaster = new THREE.Raycaster();
-        this.mouse = new THREE.Vector2();
-        this.INTERSECTED;
-        this.group = new THREE.Group();
-
-        this.mesh;
-        this.object;
-        this.stats;
-
-        this.objects= [];
-        this.controls;
-        this.clock = new THREE.Clock();
-
-        this.bulbLight;
         this.scene = new THREE.Scene();
+        this.raycaster = new THREE.Raycaster();
+
+        this.mouse = new THREE.Vector2();
+        this.controls;
+        this.INTERSECTED;
+
+        this.group = new THREE.Group();
+        this.mesh;
+        this.objects= [];
+        this.object;
+        this.bulbLight;
+
+
+        this.setupRenderer();
+        this.setCamera();
+        this.lights();
+        this.statsBox();
+        this.setupControls();
+        window.addEventListener( 'resize', this.onWindowResize, false );
+
+        //==================
+
+        var materials = new THREE.MeshBasicMaterial( { color: 0xff00ff, wireframe: true, transparent: true, opacity: 1, side: THREE.DoubleSide } ) ;
+
+        this.object = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1 ),  materials );
+        // object = new THREE.Mesh( new THREE.SphereGeometry( 1, 16, 16 ),  materials );
+        this.object.position.set( 0, 2, 1.1 );
+        this.scene.add( this.object );
+        this.objects.push(this.object);
 
 
 
+        var materials = new THREE.MeshBasicMaterial( { color: 0xff00ff, wireframe: true, transparent: true, opacity: 1, side: THREE.DoubleSide } ) ;
+        this.object = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1 ),  materials );
+
+        this.object.position.set( 0, 2, 0 );
+        this.scene.add( this.object );
+
+        console.log("ball");
+
+        this.earth();
+        this.mat();
+        this.animateLocal();
+    }
+
+    setupRenderer() {
         this.renderer = new THREE.WebGLRenderer();
         this.renderer.setPixelRatio(window.devicePixelRatio);
         this.renderer.setSize(window.innerWidth, window.innerHeight);
-
 
         this.renderer.physicallyCorrectLights = true;
         this.renderer.gammaInput = true;
@@ -49,13 +78,7 @@ export default class clientGameLoop {
         this.renderer.shadowMap.enabled = true;
         this.renderer.toneMapping = THREE.ReinhardToneMapping;
 
-
         this.container.appendChild(this.renderer.domElement);
-        window.addEventListener( 'resize', this.onWindowResize, false );
-
-        this.init();
-
-        this.animateLocal();
     }
 
     render() {
@@ -198,8 +221,12 @@ export default class clientGameLoop {
     }
     animate(data) {
         // console.log("tick tock 2");
-        this.object.rotation.x += 0.01;
+        this.object.rotation.x += 0.1;
+
+        this.object.y += 0.1;
+
         if (this.collisionDetect(this.object, this.objects)){
+
             // console.log("+")
         }else{
             // console.log("-")
@@ -315,40 +342,7 @@ export default class clientGameLoop {
     }
 
 
-    init() {
 
-        this.setCamera();
-        this.lights();
-        this.statsBox();
-        this.setupControls();
-
-        //==================
-
-        var materials = new THREE.MeshBasicMaterial( { color: 0xff00ff, wireframe: true, transparent: true, opacity: 1, side: THREE.DoubleSide } ) ;
-
-        this.object = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1 ),  materials );
-        // object = new THREE.Mesh( new THREE.SphereGeometry( 1, 16, 16 ),  materials );
-        this.object.position.set( 0, 2, 1.1 );
-        this.scene.add( this.object );
-        this.objects.push(this.object);
-
-
-
-        var materials = new THREE.MeshBasicMaterial( { color: 0xff00ff, wireframe: true, transparent: true, opacity: 1, side: THREE.DoubleSide } ) ;
-        this.object = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1 ),  materials );
-
-        this.object.position.set( 0, 2, 0 );
-        this.scene.add( this.object );
-
-        console.log("ball");
-
-
-
-        //
-        this.earth();
-        this.mat();
-
-    }
     onWindowResize() {
         this.camera.aspect = window.innerWidth / window.innerHeight;
         this.camera.updateProjectionMatrix();
