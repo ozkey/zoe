@@ -222,16 +222,12 @@ export default class GameLoopClient {
     animate(data) {
         // console.log("tick tock 2");
         this.object.rotation.x += 0.1;
-
         this.object.y += 0.1;
-
         if (this.collisionDetect(this.object, this.objects)){
-
             // console.log("+")
         }else{
             // console.log("-")
         }
-
     }
 
     lights() {
@@ -247,14 +243,11 @@ export default class GameLoopClient {
         this.bulbLight.castShadow = true;
         this.scene.add(this.bulbLight);
 
-        // var hemiLight = new THREE.HemisphereLight(0xddeeff, 0x0f0e0d, 0.045);
-        // this.scene.add(hemiLight);
-
         var light = new THREE.AmbientLight( 0x404040 ); // soft white light
         this.scene.add( light );
 
 
-//        scene.fog = new THREE.Fog( 0x050505, 10, 10 );
+        this.scene.fog = new THREE.Fog( 0x000000, 1, 2000 );
     }
 
 
@@ -262,7 +255,7 @@ export default class GameLoopClient {
 //        camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 1, 1000);
 //        camera.position.z = 40;
 
-        this.camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 0.1, 100 );
+        this.camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 0.1, 1000 );
         this.camera.position.x = -4;
         this.camera.position.z = 4;
         this.camera.position.y = 3;
