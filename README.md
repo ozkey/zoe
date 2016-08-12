@@ -1,100 +1,19 @@
-# React Webpack Node
+# Threejs React Webpack Node
 
-[![Dependency Status][dep-status-img]][dep-status-link] [![devDependency Status][dev-dep-status-img]][dev-dep-status-link]
-[![Gitter][gitter-img]][gitter-link] [![npm version][npm-badge]][npm-link]
 
-[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
-
-Your One-Stop solution for a full-stack app with ES6/ES2015 React.js featuring universal Redux, React Router, React Router Redux Hot reloading, CSS modules, Express 4.x, and multiple ORMs.
-
-[dep-status-img]: https://david-dm.org/choonkending/react-webpack-node.svg
-[dep-status-link]: https://david-dm.org/choonkending/react-webpack-node
-[dev-dep-status-img]: https://david-dm.org/choonkending/react-webpack-node/dev-status.svg
-[dev-dep-status-link]: https://david-dm.org/choonkending/react-webpack-node#info=devDependencies
-[gitter-img]: https://badges.gitter.im/Join%20Chat.svg
-[gitter-link]: https://gitter.im/choonkending/react-webpack-node?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
-[npm-badge]: https://badge.fury.io/js/react-webpack-node.svg
-[npm-link]: http://badge.fury.io/js/react-webpack-node
 
 
 ## Demo site:
+TODO: [https://ozkey.com/](https://ozkey.com/)
 
-[https://react-webpack-node.herokuapp.com/](https://react-webpack-node.herokuapp.com/)
-
-## Features:
-- ~~isomorphic~~ **universal** [**Redux**](https://github.com/reactjs/redux)
-	- Server-side rendering with [**React Router**](https://github.com/reactjs/react-router) 2.x. Having server-side rendering allows you to pre-render the initial state of your components when a user (or search engine crawler) requests a page.
-	- Integrating Redux with React Router with ~~Redux Simple Router~~ [React Router Redux](https://github.com/reactjs/react-router-redux)
-	- Asynchonous Data Fetching on server-side rendering
-	- Server side authentication + Redirecting for components
-- Hot reloading using [**react-transform-hmr**](https://github.com/gaearon/react-transform-hmr)
-- Time travel using [**Redux-Devtools Chrome Extension**](https://github.com/zalmoxisus/redux-devtools-extension)
-- [**Webpack**](https://github.com/webpack/webpack) for both development and production bundles. It's (in my opinion) the best bundler for JS, CSS, LESS, images, and lots more!
-- [**CSS Modules**](https://github.com/css-modules/css-modules) allows for modular and reusable CSS. Say goodbye to conflicts (most of them) and global scope
-- **Unit Tests** with webpack, karma, jsdom, mocha, & sinon
-	- Reducers
-	- Components
-	- Synchronous and Asynchronous Actions
-- Express 4.x server with a ton of middleware
-- Mongoose for MongoDB
-- Sequelize for Postgres
-- Procfile to enable deployment to Heroku & Docs on Salt configurations + Deployment for Digital Ocean
-
-**Easter Eggs** :egg:
-
-This boilerplate has gone through an evolution
-```
-React.js -> Facebook Flux -> Alt -> Redux
-```
-
-We have two implementations of universal flux:
-- **Redux** is on our active **master** branch
-- [**Alt**](https://github.com/goatslacker/alt) (previously implemented) on [flux/alt](https://github.com/choonkending/react-webpack-node/tree/flux/alt) branch. It features [iso](https://github.com/goatslacker/iso), react-router and ImmutableJS.
-
-> Note: If you have previously used an alt implementation of this repository, please refer to this branch. I will not be updating it as frequently as master, but definitely welcome suggestions!
 
 ## Motivation
 
-The aim of this repo is to incorporate the best practices to building a non-trivial, performant, secure and quality full-stack apps with React.js and Webpack and Node (hence...react-webpack-node). However, along the way we definitely have had extensive additions to this boilerplate! I am working to document this repo extensively so it would be easy for both beginners and experts to begin dev-ing on it without pulling your hair out.
-
-## Why
-**Redux**
-
-I'm really a fan of this implementation of flux for state management. The main principles of having:
-- a single store
-- state being read-only (you have to express an intent to mutate being creating actions)
-- mutations written as pure functions
-
-make it very fun and easy to write **predictable** code! There's a ton of reasons why, but you should head to the [Redux docs](http://redux.js.org/index.html) to dive in!
-
-Or if you are more of a *visual learner* watch the free egghead video series narrated by the creator of redux:
-
-1. [Getting Started](https://egghead.io/series/getting-started-with-redux)
-2. [Building Idiomatically](https://egghead.io/series/building-react-applications-with-idiomatic-redux)
-
-**alt**
-
-Having isomorphic React was one of my key criteria when choosing a Flux library, which helped narrow down the scope of libraries. I found alt's implementation to be clean and simple, and like the option of allowing us to create alt instances or using singletons (and flushing the stores). I also like the direction in which alt is heading.
+The aim of this repo is to learn and play with Threejs, React and Mongo DB
 
 ## Instructions
 
-### Prerequisites
-
-> If you wish to run this app **without installing/running a database**, you can easily do so. Read more [here](https://github.com/choonkending/react-webpack-node/blob/master/docs/databases.md).
-
-**Install MongoDB as your database**:
-
-```bash
-# Update brew formulae
-brew update
 # Install MongoDB
-brew install mongodb
-```
-
-If you hate MongoDB with a passion and would like to see a postgresql example, check [this](https://github.com/choonkending/react-webpack-node/blob/master/docs/databases.md) out!
-
-**Setup your mongoDB directory**
-
 Note: Make sure you have the directory and its permissions setup (i.e. `/data/db`):
 ```bash
 sudo mkdir -p /data/db
@@ -142,55 +61,7 @@ npm start
 
 **Deployment**
 
-Heroku
-```bash
-heroku create
-
-# Deploy to Heroku server
-git push heroku master
-
-# Database on Heroku
-heroku addons:add mongohq
-# or
-heroku addons:add mongolab
-
-# OPTIONAL:
-
-# Rename if you need to
-heroku app:rename <newname>
-
-# Open Link in browser
-heroku open
-
-```
-
-Note:
-
-1. If you are working from a different machine and get `heroku does not appear to be a remote repository` message, be sure to run `git remote add heroku git@heroku.com:appname.git`.
-2. For setting up Google Authentication for Heroku and local dev, read the FAQ section
-
-Digital Ocean
-
-1. Create a Droplet
-2. Follow [this](https://www.digitalocean.com/community/tutorials/how-to-set-up-a-node-js-application-for-production-on-ubuntu-14-04) or
-[this](https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-an-ubuntu-14-04-server) tutorial
-to set up nodejs
-3. Follow [this](https://www.digitalocean.com/community/tutorials/how-to-install-mongodb-on-ubuntu-12-04) tutorial to install mongodb
-4. git clone this repo
-```bash
-npm install
-sudo npm install pm2 -g
-pm2 start server/index.js
-pm2 startup ubuntu
-sudo env PATH=$PATH:/usr/local/bin pm2 startup ubuntu -u sammy
-
-```
-
-Read more on DO config [here](https://github.com/choonkending/react-webpack-node/blob/master/docs/GettingStartedWithDigitalOcean.md)
-
-AWS
-
-TBD - if you have an interest, please help
+TODO
 
 ## Unit Tests
 
@@ -256,35 +127,13 @@ export GOOGLE_CLIENTID=YOUR_CLIENTID
 export GOOGLE_SECRET=YOUR_SECRET
 ```
 
-**Heroku**
-
-- Fret not! Heroku's covered [this](https://devcenter.heroku.com/articles/config-vars) pretty well:
-
-```bash
-heroku config:set GOOGLE_CLIENTID=YOUR_CLIENTID
-heroku config:set GOOGLE_SECRET=YOUR_SECRET
-heroku config:set GOOGLE_CALLBACK=YOUR_CALLBACK
-```
-4. I do not know how to write React Components/anything in ES6. Help!
-	- Don't you worry child. Read [this](https://github.com/choonkending/react-webpack-node/blob/master/docs/ReactInES6.md).
-	- You can learn more about ES6 (or ES2015) [here](http://babeljs.io/docs/learn-es2015/).
-
 **Google Analytics**
 
 Google Analytics are there if you want them and very easy to enable the basic site level support. All you need to do is replace the tracking ID in `app/server.jsx`
 
 To learn about how to best use Google Analytics for your site [read more](https://developers.google.com/analytics/devguides/collection/analyticsjs/) here.
 
-
-## How to Contribute:
-
-Best way to keep up to date is check the [issues](https://github.com/choonkending/react-webpack-node/issues). I really welcome improvements for **all aspects** of an app.
-
-1. Any suggestions/improvements/bugs can be in the form of Pull Requests, or creating an issue.
-2. Coding guidelines:
- - [Airbnb's Style Guide](https://github.com/airbnb/javascript)
- - [bendc's frontend guidelines](https://github.com/bendc/frontend-guidelines)
-
+## Credits
 
 Credits to [webpack-server-side-example](https://github.com/webpack/react-webpack-server-side-example), [example-app](https://github.com/webpack/example-app), [flux-examples](https://github.com/facebook/flux/tree/master/examples), [node-express-mongo-demo](https://github.com/madhums/node-express-mongoose-demo), [hackathon-starter](https://github.com/sahat/hackathon-starter/), [web-starter-kit](https://github.com/google/web-starter-kit), [awesome material-ui](https://github.com/callemall/material-ui), [alt and iso](https://github.com/goatslacker/iso/tree/master/examples/react-router-flux), [react-starter](https://github.com/webpack/react-starter), [reap](https://github.com/choonkending/reap), [isomorphic-redux-app](https://github.com/caljrimmer/isomorphic-redux-app) and [mxstbr/react-boilerplate](https://github.com/mxstbr/react-boilerplate/blob/master/README.md)
 
