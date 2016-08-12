@@ -71,9 +71,9 @@ export default class GameLoopHelpers {
         this.scene.updateMatrixWorld();
         this.object.rotation.x += 0.01;
         if (this.collisionDetect(this.object, this.objects3D)){
-            console.log("+")
+            // console.log("+")
         }else{
-            console.log("-")
+            // console.log("-")
         }
     }
 }

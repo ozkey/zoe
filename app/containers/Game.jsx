@@ -8,21 +8,7 @@ import styles from 'css/components/game';
 
 const cx = classNames.bind(styles);
 
-
-/*
-
-
- <script src="http://localhost:8080/threejs/three.min.js"></script>
- <script src="http://localhost:8080/threejs/examples/js/libs/stats.min.js"></script>
- <script src="http://localhost:8080/threejs/examples/js/libs/dat.gui.min.js"></script>
- <script src="http://localhost:8080/threejs/examples/js/controls/OrbitControls.js"></script>
- <script src="http://localhost:8080/js/vendor/Detector.js"></script>
-
- */
-
-
 class Game extends Component {
-
 
     componentDidMount() {
         console.log("componentDidMount");
@@ -32,14 +18,13 @@ class Game extends Component {
         this.gameLoopClient = new GameLoopClient(container);
 
         this.socket = require('socket.io-client')('http://localhost:3000');
-        this.socket.on('news', function (data) {
+        this.socket.on('news', (data) => {
             console.log(data);
             this.socket.emit('my other event', { my: 'data' });
-        }.bind(this)
-        )
-
+        });
         this.socket.on('tick',  (data) => {
             this.gameLoopClient.animate(data)
+
         });
 
 
@@ -67,35 +52,28 @@ class Game extends Component {
 
     render() {
         const {fetchGameObjects, destroyGameObject,createGameObject } = this.props;
-
         console.log(this.props.user);
         return (
             <div className={cx('game')}>
-
                 data:{this.props.gameObjects.length>0?this.props.gameObjects[0].text :""}
                 <br />
                 user:{this.props.user.authenticated?"yes":"no"}
                 <br />
                 <button className={ cx('button', 'destroy')}
-                        onClick={destroyGameObject}
-                >
+                        onClick={destroyGameObject}>
                     destroyObject
                 </button>
                 <button className={ cx('button', 'destroy')}
-                        onClick={createGameObject}
-                >
+                        onClick={createGameObject}>
                     createObject
                 </button>
-
                 <div id="container"></div>
-
             </div>
         );
     }
 }
 
 Game.propTypes = {
-
     gameObjects: PropTypes.array.isRequired,
     destroyGameObject: PropTypes.func.isRequired,
     createGameObject: PropTypes.func.isRequired,
