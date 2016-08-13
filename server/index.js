@@ -4,7 +4,7 @@ import { ENV } from './config/appConfig';
 import { connect } from './db';
 import passportConfig from './config/passport';
 import expressConfig from './config/express';
-import ioConfig from './config/io';
+import IoConfig from './config/io';
 import routesConfig from './config/routes';
 import webpackDevConfig from '../webpack/webpack.config.dev-client';
 const App = require('../public/assets/server');
@@ -35,13 +35,7 @@ if (ENV === 'development') {
 /*
  * Bootstrap application settings
  */
-let session = expressConfig(app);
-
-/*
- * REMOVE if you do not need any routes
- *
- * Note: Some of these routes have passport and database model dependencies
- */
+const session = expressConfig(app);
 routesConfig(app);
 
 /*
@@ -52,41 +46,21 @@ routesConfig(app);
  */
 app.get('*', App.default);
 
-// app.listen(app.get('port'));
-
-
-
-
-
-
-
-
-var server = require('http').Server(app);
-var io = require('socket.io')(server);
+const server = require('http').Server(app); // eslint-disable-line
+const io = require('socket.io')(server);
 server.listen(app.get('port'), (error) => {
     if (!error) {
         console.log(`GAME is running on port: ${app.get('port')}`); // eslint-disable-line
     }
 });
 
-
 import GameLoop from './GameLoop';
 
-let gameLoop =  new GameLoop();
+const gameLoop = new GameLoop();
 gameLoop.getData();
 
-ioConfig(io,session,gameLoop);
+const ioConfig = new IoConfig(io, session, gameLoop);  // eslint-disable-line
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+/*
+ * End of file
+ */
