@@ -84,7 +84,7 @@ export default (app) => {
     }
     console.log('--------------------------');
 
-    let sessionSess = session(sess);
+    const sessionSess = session(sess);
     app.use(sessionSess);
 
     app.use(passport.initialize());
@@ -92,8 +92,6 @@ export default (app) => {
 
     app.use(flash());
 
-    //console.log("session" , session);
+    // console.log("session" , session);
     return sessionSess;
-
-
 };
