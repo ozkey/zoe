@@ -56,9 +56,7 @@ server.listen(app.get('port'), (error) => {
 
 import GameLoop from './GameLoop';
 
-const gameLoop = new GameLoop();
-gameLoop.getData();
-
+const gameLoop = new GameLoop(); // eslint-disable-line
 const ioConfig = new IoConfig(io, session, gameLoop);  // eslint-disable-line
 
 /*

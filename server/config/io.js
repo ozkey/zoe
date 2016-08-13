@@ -9,11 +9,6 @@ export default class IoConfig {
             session(req, res, next);
         });
 
-
-        gameLoop.setTickFunction(() => {
-            io.emit('tick', {}); // short form
-        });
-
         io.on('connection', (socket) => {
             const req = socket.handshake;
             const id = req.session.passport.user;
@@ -39,6 +34,8 @@ export default class IoConfig {
                             userSettings = newUserSettings;
                             console.log('userSettings created', userSettings);
                             socket.emit('news', { hello: 'world is in io :) ' + gameLoop.getData() });
+
+                            this.initUser(userSettings, gameLoop, socket);
                         });
                     }
                 });
@@ -53,5 +50,15 @@ export default class IoConfig {
                 console.log(data);
             });
         });
+
+        gameLoop.setTickFunction(() => {
+            io.emit('tick', {}); // short form
+        });
+    }
+
+    initUser(userSettings, gameLoop, socket) {
+        gameLoop.addUser(userSettings);
+        console.log('userSettings created', userSettings);
+        socket.emit('news', {hello: 'world is in io :) ' + gameLoop.getGameData()});
     }
 }
