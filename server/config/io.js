@@ -1,4 +1,5 @@
 import deserializeUser from '../db/mongo/passport/deserializeUser';
+import Settings from '../db/mongo/helpers/Settings';
 
 export default (io, session, gameLoop) => {
     //  console.log("session 2" , session);
@@ -17,17 +18,38 @@ export default (io, session, gameLoop) => {
     io.on('connection', (socket) => {
         const req = socket.handshake;
         const id = req.session.passport.user;
+        const settings = new Settings();
+        let userData = undefined;
+        let userSettings = undefined;
+
         console.log('request email +++ ioi oioioioioioioioi+++++++++++++ ', id);
         deserializeUser(id, (err, user) => {
             console.log('err?', err, user);
             req.user = user;
+            userData = user;
+
+            // console.log(userData);
+            // console.log('========================================');
+
+            settings.get(userData.email, (savedUserSettings) => {
+                userSettings = savedUserSettings;
+                console.log('========================================');
+                console.log('userSettings++++++', userSettings);
+                if (userSettings === null) {
+                    userSettings = settings.create(userData.email, (newUserSettings) => {
+                        userSettings = newUserSettings;
+                        console.log('userSettings created', userSettings);
+                        socket.emit('news', { hello: 'world is in io :) ' + gameLoop.getData() });
+                    });
+                }
+            });
         });
 
         socket.on('close', (data) => {
             console.log(data);
             socket.disconnect(0);
         });
-        socket.emit('news', { hello: 'world is in io :) ' + gameLoop.getData() });
+
         socket.on('my other event', (data) => {
             console.log(data);
         });
