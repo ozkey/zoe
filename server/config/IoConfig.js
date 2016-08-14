@@ -43,10 +43,14 @@ export default class IoConfig {
                     userSettings = settings.create(userData.email, (newUserSettings) => {
                         userSettings = newUserSettings;
                         console.log('userSettings created', userSettings);
-                        socket.emit('news', {hello: 'world is in io :) ' + gameLoop.getData()});
-
-                        this.initUser(userSettings, gameLoop, socket);
+                        if (userSettings === null) {
+                            socket.emit('error', {hello: 'world is in io :) ' + gameLoop.getData()});
+                        } else {
+                            this.initUser(userSettings, gameLoop, socket);
+                        }
                     });
+                } else {
+                    this.initUser(userSettings, gameLoop, socket);
                 }
             });
         });
