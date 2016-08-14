@@ -66,7 +66,7 @@ export default class IoConfig {
     }
 
     initUser(userSettings, gameLoop, socket) {
-        // User to join are
+        // User to join area
         socket.join('1x1y-1000x1000y');
 
         gameLoop.addUser(userSettings);
