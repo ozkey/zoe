@@ -1,23 +1,13 @@
 
-const UP = 'UP';
-const DOWN = 'DOWN';
+export const UP = 'UP';
+export const DOWN = 'DOWN';
 
-const FOWARD = 'FOWARD';
-const BACK = 'BACK';
-const RIGHT = 'RIGHT';
-const LEFT = 'RIGHT';
+export const FOWARD = 'FOWARD';
+export const BACK = 'BACK';
+export const RIGHT = 'RIGHT';
+export const LEFT = 'RIGHT';
 
-const ROL_RIGHT = 'ROL_RIGHT';
-const ROL_LEFT = 'ROL_RIGHT';
+export const ROL_RIGHT = 'ROL_RIGHT';
+export const ROL_LEFT = 'ROL_RIGHT';
 
 
-export default {
-    UP,
-    DOWN,
-    FOWARD,
-    BACK,
-    RIGHT,
-    LEFT,
-    ROL_RIGHT,
-    ROL_LEFT
-};

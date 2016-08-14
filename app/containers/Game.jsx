@@ -28,6 +28,18 @@ class Game extends Component {
         });
 
 
+        document.addEventListener('keyup', (event) => {
+            const keyName = event.key;
+
+            // As the user release the Ctrl key, the key is no longer active.
+            // So event.ctrlKey is false.
+            if (keyName === 'Control') {
+                console.log('>up');
+                this.socket.emit('UP', { my: 'data' });
+            }
+        }, false);
+
+
 
     }
     componentWillUnmount(){
