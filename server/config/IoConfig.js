@@ -13,8 +13,8 @@ export default class IoConfig {
             this.connectUser(socket, gameLoop);
         });
 
-        gameLoop.setTickFunction(() => {
-            io.emit('tick', {}); // short form
+        gameLoop.setTickFunctionCallback(() => {
+            this.ioTick(io);
         });
     }
 
@@ -66,8 +66,17 @@ export default class IoConfig {
     }
 
     initUser(userSettings, gameLoop, socket) {
+        // User to join are
+        socket.join('1x1y-1000x1000y');
+
         gameLoop.addUser(userSettings);
         console.log('userSettings created', userSettings);
         socket.emit('news', {hello: 'world is in io :) ' + gameLoop.getGameData()});
+    }
+
+    ioTick(io) {
+        // Get users
+        // Send data
+        io.emit('tick', {}); // short form
     }
 }

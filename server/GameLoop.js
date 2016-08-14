@@ -7,19 +7,19 @@ export default class GameLoop {
         setTimeout(this.theLoop.bind(this), 1000);
 
         this.timePreviousReset = 0;
-        this.tickFunction = () => {
+        this.tickFunctionCallback = () => {
             console.log('tick');
         };
         this.users = [];
     }
 
-    setTickFunction(func) {
-        this.tickFunction = func;
+    setTickFunctionCallback(func) {
+        this.tickFunctionCallback = func;
     }
 
     theLoop() {
         this.count ++;
-        this.tickFunction();
+        this.tickFunctionCallback();
         this.gameLoopHelpers.animate();
         if (this.timePreviousReset + 1000 < this.getTime()) {
             console.log('frames per second     ' + this.count);
