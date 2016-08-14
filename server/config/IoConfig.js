@@ -1,5 +1,7 @@
 import deserializeUser from '../db/mongo/passport/deserializeUser';
 import Settings from '../db/mongo/helpers/Settings';
+import GameUser from './../GameUser';
+import {UP, DOWN, FOWARD, BACK, RIGHT, LEFT, ROL_RIGHT, ROL_LEFT} from '../../app/gameHelpers/events';
 
 export default class IoConfig {
     constructor(io, session, gameLoop) {
@@ -60,23 +62,26 @@ export default class IoConfig {
             socket.disconnect(0);
         });
 
-        socket.on('my other event', (data) => {
-            console.log(data);
-        });
+
     }
 
     initUser(userSettings, gameLoop, socket) {
-        // User to join area
-        socket.join('1x1y-1000x1000y');
+        gameLoop.addUser(new GameUser(userSettings));
+        // EVENTS
 
-        gameLoop.addUser(userSettings);
-        console.log('userSettings created', userSettings);
-        socket.emit('news', {hello: 'world is in io :) ' + gameLoop.getGameData()});
+
+        socket.on(UP, (data) => { console.log('UP', data); });
+        socket.on(DOWN, (data) => { console.log('DOWN', data); });
+
+        // console.log('userSettings created', userSettings);
+        // socket.emit('news', {hello: 'world is in io :) ' + gameLoop.getGameData()});
     }
 
     ioTick(io) {
         // Get users
         // Send data
         io.emit('tick', {}); // short form
+
+        // Save user settings every few minutes
     }
 }

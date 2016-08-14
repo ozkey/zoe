@@ -29,9 +29,10 @@ export default class GameLoop {
         setTimeout(this.theLoop.bind(this), 50);
     }
 
-    addUser(userSettings) {
-        this.users.push(userSettings);
+    addUser(gameUser) {
+        this.users.push(gameUser);
     }
+
     getGameData() {
         return 'gameLoop text';
     }
