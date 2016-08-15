@@ -11,6 +11,8 @@ export default class GameLoop {
             console.log('tick');
         };
         this.users = [];
+        this.gameDataPerSectors = {}; // To send partial data (io room selection)
+        this.waitForDataStage = true;
     }
 
     setTickFunctionCallback(func) {
@@ -18,15 +20,24 @@ export default class GameLoop {
     }
 
     theLoop() {
-        this.count ++;
-        this.tickFunctionCallback();
-        this.gameLoopHelpers.animate();
-        if (this.timePreviousReset + 1000 < this.getTime()) {
-            console.log('frames per second     ' + this.count);
-            this.timePreviousReset = this.getTime();
-            this.count = 0;
+        // http://stackoverflow.com/questions/1232040/how-do-i-empty-an-array-in-javascript
+        if (this.waitForDataStage) {
+            this.waitForDataStage = !this.waitForDataStage;
+            // Waiting to collect data
+            setTimeout(this.theLoop.bind(this), 50);
+        } else {
+            this.waitForDataStage = !this.waitForDataStage;
+            this.frameCount ++;
+
+            this.gameLoopHelpers.animate();
+            if (this.timePreviousReset + 1000 < this.getTime()) {
+                console.log('frames per second     ' + this.frameCount);
+                this.timePreviousReset = this.getTime();
+                this.frameCount = 0;
+            }
+            this.tickFunctionCallback(this.gameDataPerSectors);
+            setTimeout(this.theLoop.bind(this), 10);
         }
-        setTimeout(this.theLoop.bind(this), 50);
     }
 
     addUser(gameUser) {
