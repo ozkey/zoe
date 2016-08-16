@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import classNames from 'classnames/bind';
 import GameLoopClient from './GameLoopClient';
+import GameUserClient from './GameUserClient';
 
 import { fetchGameObjects, destroyGameObject,createGameObject } from 'actions/game';
 import styles from 'css/components/game';
@@ -10,34 +11,32 @@ const cx = classNames.bind(styles);
 
 class Game extends Component {
 
+    constructor(){
+        super();
+        this.startTicking = false;
+    }
     componentDidMount() {
         console.log("componentDidMount");
 
         if(window == undefined) return; //client only
         var container = document.getElementById( 'container' );
-        this.gameLoopClient = new GameLoopClient(container);
+
 
         this.socket = require('socket.io-client')('http://localhost:3000');
-        this.socket.on('news', (data) => {
-            console.log(data);
-            this.socket.emit('my other event', { my: 'data' });
+
+        this.socket.on('userSettings', (data) => {
+            console.log('recived userSettings', data);
+            this.socket = data;
+            this.gameUser = new GameUserClient(this.userSettings, this.socket);
+            this.gameLoopClient = new GameLoopClient(container, this.gameUser);
+            this.startTicking = true;
         });
+
         this.socket.on('tick',  (data) => {
-            this.gameLoopClient.animate(data)
-
+            if(this.startTicking)  this.gameLoopClient.animate(data);
         });
 
 
-        document.addEventListener('keyup', (event) => {
-            const keyName = event.key;
-
-            // As the user release the Ctrl key, the key is no longer active.
-            // So event.ctrlKey is false.
-            if (keyName === 'Control') {
-                console.log('>up');
-                this.socket.emit('UP', { my: 'data' });
-            }
-        }, false);
 
 
 

@@ -64,6 +64,7 @@ export default class IoConfig {
     }
 
     initUser(userSettings, gameLoop, socket) {
+        socket.emit('userSettings', userSettings);
         gameLoop.addUser(new GameUser(userSettings, socket));
     }
 

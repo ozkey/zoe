@@ -5,15 +5,14 @@ export default class GameLoopClient {
 
 
 
-    constructor(obj) {
+    constructor(domContainer) {
 
         let gui = require('../../node_modules/three/examples/js/libs/dat.gui.min');
         let OrbitControls = require('../gameHelpers/OrbitControls');
         let Detector = require('../gameHelpers/Detector');
 
         this.destroyed = false; //to stop frame animation
-
-        this.container = obj;
+        this.container = domContainer;
 
         this.stats;
         this.clock = new THREE.Clock();
@@ -42,7 +41,7 @@ export default class GameLoopClient {
         this.setupControls();
         window.addEventListener( 'resize', this.onWindowResize, false );
 
-        //==================
+        // ==================
 
         var materials = new THREE.MeshBasicMaterial( { color: 0xff00ff, wireframe: true, transparent: true, opacity: 1, side: THREE.DoubleSide } ) ;
 
