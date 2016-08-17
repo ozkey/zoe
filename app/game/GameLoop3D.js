@@ -6,8 +6,8 @@ export default class GameLoopClient {
     constructor(domContainer, user) {
         this.gameUserClient = user;
         let gui = require('../../node_modules/three/examples/js/libs/dat.gui.min');
-        let OrbitControls = require('../gameHelpers/OrbitControls');
-        let Detector = require('../gameHelpers/Detector');
+        let OrbitControls = require('./gameHelpers/OrbitControls');
+        let Detector = require('./gameHelpers/Detector');
 
         this.destroyed = false; //to stop frame animation
         this.container = domContainer;

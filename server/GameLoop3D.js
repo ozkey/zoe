@@ -1,5 +1,5 @@
-let THREE = require('three');
-let Projector = require('../app/gameHelpers/Projector');
+const THREE = require('three');
+const Projector = require('../app/game/gameHelpers/Projector');
 
 
 export default class GameLoop3D {
