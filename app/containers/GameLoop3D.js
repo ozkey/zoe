@@ -180,7 +180,7 @@ export default class GameLoopClient {
             ballMat.needsUpdate = true;
         });
 
-        var ballGeometry = new THREE.SphereGeometry(1, 32, 32);
+        var ballGeometry = new THREE.SphereGeometry(.1, 32, 32);
 
 
 
