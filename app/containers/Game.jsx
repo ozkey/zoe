@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import classNames from 'classnames/bind';
 import GameLoopClient from './GameLoopClient';
-import GameUserClient from './GameUserClient';
+
 
 import { fetchGameObjects, destroyGameObject,createGameObject } from 'actions/game';
 import styles from 'css/components/game';
@@ -16,41 +16,15 @@ class Game extends Component {
         this.startTicking = false;
     }
     componentDidMount() {
-        console.log("componentDidMount");
-
         if(window == undefined) return; //client only
         var container = document.getElementById( 'container' );
-
-
-        this.socket = require('socket.io-client')('http://localhost:3000');
-
-        this.socket.on('userSettings', (data) => {
-            console.log('recived userSettings', data);
-            this.socket = data;
-            this.gameUser = new GameUserClient(this.userSettings, this.socket);
-            this.gameLoopClient = new GameLoopClient(container, this.gameUser);
-            this.startTicking = true;
-        });
-
-        this.socket.on('tick',  (data) => {
-            if(this.startTicking)  this.gameLoopClient.animate(data);
-        });
-
-
-
-
-
+        this.gameLoopClient = new GameLoopClient(container)
     }
     componentWillUnmount(){
         console.log("delete game");
         if(window == undefined) return; //client only
-        var container = document.getElementById( 'container' ).innerHTML = "";
-        console.log("close game");
-        // this.socket.emit('close');
-        this.socket.close();
         this.gameLoopClient.destroy();
         delete this.gameLoopClient;
-
 
     }
 

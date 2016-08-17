@@ -2,7 +2,7 @@ let THREE = require('three');
 let Projector = require('../app/gameHelpers/Projector');
 
 
-export default class GameLoopHelpers {
+export default class GameLoop3D {
 
 
     constructor() {

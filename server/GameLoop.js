@@ -1,9 +1,9 @@
-import GameLoopHelpers from './GameLoopHelpers';
+import GameLoop3D from './GameLoop3D';
 
 export default class GameLoop {
 
     constructor() {
-        this.gameLoopHelpers = new GameLoopHelpers();
+        this.gameLoopHelpers = new GameLoop3D();
         setTimeout(this.theLoop.bind(this), 1000);
 
         this.timePreviousReset = 0;
