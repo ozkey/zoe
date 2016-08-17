@@ -16,6 +16,7 @@ export default class GameLoopClient {
         });
 
         this.socket.on('tick', (data) => {
+            // console.log(data);
             if (this.startTicking) this.gameLoop3D.animate(data);
         });
     }

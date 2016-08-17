@@ -3,18 +3,28 @@ import GameLoop3D from './GameLoop3D';
 export default class GameLoop {
 
     constructor() {
-        this.gameLoopHelpers = new GameLoop3D();
+        this.gameLoop3D = new GameLoop3D();
         setTimeout(this.theLoop.bind(this), 1000);
 
         this.timePreviousReset = 0;
         this.tickFunctionCallback = () => {
             console.log('tick');
         };
+
         this.users = [];
-        this.gameDataPerSectors = {}; // To send partial data (io room selection)
+        this.spaceShips = [];
+        this.spaceStations = [];
+
+        this.gameDataSectors = {t:'todo'}; // To send partial data (io room selection)
         this.waitForDataStage = true;
     }
 
+    getDataSectors() {
+        return this.gameDataSectors;
+    }
+    getDataForSector(sector) {
+        return this.gameDataSectors[sector];
+    }
     setTickFunctionCallback(func) {
         this.tickFunctionCallback = func;
     }
@@ -29,19 +39,25 @@ export default class GameLoop {
             this.waitForDataStage = !this.waitForDataStage;
             this.frameCount ++;
 
-            this.gameLoopHelpers.animate();
+            this.gameLoop3D.animate();
             if (this.timePreviousReset + 1000 < this.getTime()) {
                 console.log('frames per second     ' + this.frameCount);
                 this.timePreviousReset = this.getTime();
                 this.frameCount = 0;
             }
-            this.tickFunctionCallback(this.gameDataPerSectors);
+            this.tickFunctionCallback();
             setTimeout(this.theLoop.bind(this), 10);
         }
     }
 
     addUser(gameUser) {
         this.users.push(gameUser);
+    }
+    addSpaceShip(spaceShip) {
+        this.spaceShips.push(spaceShip);
+    }
+    addSpaceStation(spaceStation) {
+        this.spaceStations.push(spaceStation);
     }
 
     getGameData() {
