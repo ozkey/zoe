@@ -9,7 +9,7 @@ export default class GameLoopClient {
 
         this.socket.on('userSettings', (data) => {
             console.log('recived userSettings', data);
-            this.socket = data;
+            this.userSettings = data;
             this.gameUser = new GameUserClient(this.userSettings, this.socket);
             this.gameLoop3D = new GameLoop3D(this.container, this.gameUser);
             this.startTicking = true;
