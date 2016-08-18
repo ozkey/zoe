@@ -11,7 +11,7 @@ export default class GameLoopClient {
             console.log('recived userSettings', data);
             this.socket = data;
             this.gameUser = new GameUserClient(this.userSettings, this.socket);
-            this.gameLoop3D = new GameLoop3D(container, this.gameUser);
+            this.gameLoop3D = new GameLoop3D(this.container, this.gameUser);
             this.startTicking = true;
         });
 
@@ -24,7 +24,7 @@ export default class GameLoopClient {
     destroy() {
         // var container = document.getElementById( 'container' ).innerHTML = "";
         this.container.innerHTML = '';
-        this.gameLoop3D.destroy()
+        this.gameLoop3D.destroy();
         this.startTicking = false;
         console.log('close game');
         // this.socket.emit('close');
