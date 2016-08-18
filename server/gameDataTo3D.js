@@ -17,5 +17,7 @@ export function gameDataTo3D(data, isWireframe) {
     object.position.set(data.bluePrint[0].x, data.bluePrint[0].y, data.bluePrint[0].z);
     group.add(object);
     group.position.set(data.x, data.y, data.z);
+
+    return group;
 }
 

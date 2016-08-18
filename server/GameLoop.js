@@ -5,7 +5,7 @@ export default class GameLoop {
 
     constructor() {
         this.gameLoop3D = new GameLoop3D();
-        setTimeout(this.theLoop.bind(this), 1000);
+        // setTimeout(this.theLoop.bind(this), 1000);
 
         this.timePreviousReset = 0;
         this.tickFunctionCallback = () => {
@@ -17,8 +17,9 @@ export default class GameLoop {
         this.spaceStations = [];
 
         this.gameDataSectors = {t:'todo'}; // To send partial data (io room selection)
-        this.waitForDataStage = true;
-
+        this.waitForDataStage = false;
+        // Start loop
+        this.theLoop();
 
         // =========================== test
 
@@ -57,9 +58,9 @@ export default class GameLoop {
                 owner: 'ozkey.com@gmail.com',
                 weight: 10,
                 powerCunsumption: 10,
-                x: 3,
-                y: 3,
-                z: 3,
+                x: 1.01,
+                y: 1.01,
+                z: 1.01,
                 bluePrint: [
                     {
                         c: [0, 0, 0], // cordinates
