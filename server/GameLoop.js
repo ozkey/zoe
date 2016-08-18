@@ -1,4 +1,5 @@
 import GameLoop3D from './GameLoop3D';
+import {gameDataTo3D} from './gameDataTo3D';
 
 export default class GameLoop {
 
@@ -17,6 +18,68 @@ export default class GameLoop {
 
         this.gameDataSectors = {t:'todo'}; // To send partial data (io room selection)
         this.waitForDataStage = true;
+
+
+        // =========================== test
+
+        this.addSpaceShip(
+            {
+                id: 1,
+                owner: 'ozkey.com@gmail.com',
+                weight: 10,
+                powerCunsumption: 10,
+                x: 1,
+                y: 1,
+                z: 1,
+                bluePrint: [
+                    {
+                        c: [0, 0, 0], // cordinates
+                        m: 'metal1'   // material
+                    },
+                    {
+                        c: [1, 0, 1], // cordinates
+                        m: 'metal1'   // material
+                    },
+                    {
+                        c: [1, 0, -1], // cordinates
+                        m: 'metal1'   // material
+                    },
+                    {
+                        c: [1, 1, 1], // cordinates
+                        m: 'metal1'   // material
+                    },
+                ]
+            }
+        );
+        this.addSpaceShip(
+            {
+                id: 2,
+                owner: 'ozkey.com@gmail.com',
+                weight: 10,
+                powerCunsumption: 10,
+                x: 3,
+                y: 3,
+                z: 3,
+                bluePrint: [
+                    {
+                        c: [0, 0, 0], // cordinates
+                        m: 'metal1'   // material
+                    },
+                    {
+                        c: [1, 0, 1], // cordinates
+                        m: 'metal1'   // material
+                    },
+                    {
+                        c: [1, 0, -1], // cordinates
+                        m: 'metal1'   // material
+                    },
+                    {
+                        c: [1, 1, 1], // cordinates
+                        m: 'metal1'   // material
+                    },
+                ]
+            }
+        );
     }
 
     getDataSectors() {
@@ -55,6 +118,7 @@ export default class GameLoop {
     }
     addSpaceShip(spaceShip) {
         this.spaceShips.push(spaceShip);
+        this.gameLoop3D.addObject(gameDataTo3D(spaceShip,true));
     }
     addSpaceStation(spaceStation) {
         this.spaceStations.push(spaceStation);

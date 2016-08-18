@@ -20,66 +20,6 @@ export default class IoConfig {
             this.ioTick(io);
         });
 
-
-        // =========================
-
-
-        this.gameLoop.addSpaceShip(
-            {
-                owner: 'ozkey.com@gmail.com',
-                weight: 10,
-                powerCunsumption: 10,
-                x: 1,
-                y: 1,
-                z: 1,
-                bluePrint: [
-                    {
-                        c: [0, 0, 0], // cordinates
-                        m: 'metal1'   // material
-                    },
-                    {
-                        c: [1, 0, 1], // cordinates
-                        m: 'metal1'   // material
-                    },
-                    {
-                        c: [1, 0, -1], // cordinates
-                        m: 'metal1'   // material
-                    },
-                    {
-                        c: [1, 1, 1], // cordinates
-                        m: 'metal1'   // material
-                    },
-                ]
-            }
-        );
-        this.gameLoop.addSpaceShip(
-            {
-                owner: 'ozkey.com@gmail.com',
-                weight: 10,
-                powerCunsumption: 10,
-                x: 3,
-                y: 3,
-                z: 3,
-                bluePrint: [
-                    {
-                        c: [0, 0, 0], // cordinates
-                        m: 'metal1'   // material
-                    },
-                    {
-                        c: [1, 0, 1], // cordinates
-                        m: 'metal1'   // material
-                    },
-                    {
-                        c: [1, 0, -1], // cordinates
-                        m: 'metal1'   // material
-                    },
-                    {
-                        c: [1, 1, 1], // cordinates
-                        m: 'metal1'   // material
-                    },
-                ]
-            }
-        );
     }
 
 

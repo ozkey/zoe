@@ -17,6 +17,10 @@ export default class GameLoopClient {
 
         this.socket.on('tick', (data) => {
             // console.log(data);
+            // TODO track data to remove or add new objects (space ships) in data
+
+
+            // Let the game update the data and animate at the same time (one loop pass)
             if (this.startTicking) this.gameLoop3D.animate(data);
         });
     }
