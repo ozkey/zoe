@@ -1,5 +1,5 @@
 import GameLoop3D from './GameLoop3D';
-import {gameDataTo3D} from './gameDataTo3D';
+import {gameDataTo3D} from '../app/game/gameHelpers/gameDataTo3D';
 
 export default class GameLoop {
 
