@@ -1,6 +1,6 @@
 const THREE = require('three');
 const Projector = require('../app/game/gameHelpers/Projector');
-
+import {collisionDetect} from '../app/game/gameHelpers/collisionDetect';
 
 export default class GameLoop3D {
 
@@ -20,37 +20,29 @@ export default class GameLoop3D {
     addObject(game3DObject){
         this.objects3D.push(game3DObject);
         this.scene.add(game3DObject);
-
     }
-    collisionDetect(obj,collidableMeshList){
 
-        // collision detection:
-        //   determines if any of the rays from the cube's origin to each vertex
-        //		intersects any face of a mesh in the array of target meshes
-        //   for increased collision accuracy, add more vertices to the cube;
-        //		for example, new THREE.CubeGeometry( 64, 64, 64, 8, 8, 8, wireMaterial )
-        //   HOWEVER: when the origin of the ray is within the target mesh, collisions do not occur
-        var originPoint = obj.position.clone();
-
-        for (var vertexIndex = 0; vertexIndex < obj.geometry.vertices.length; vertexIndex++)
-        {
-            var localVertex = obj.geometry.vertices[vertexIndex].clone();
-            var globalVertex = localVertex.applyMatrix4( obj.matrix );
-            var directionVector = globalVertex.sub( obj.position );
-            var ray = new THREE.Raycaster( originPoint, directionVector.clone().normalize() );
-            var collisionResults = ray.intersectObjects( collidableMeshList );
-            if ( collisionResults.length > 0 && collisionResults[0].distance < directionVector.length() )
-            {
-                return true;
-            }
-        }
-        return false;
-    }
 
     createObjects() {
 
-    }
+        // var materials = new THREE.MeshBasicMaterial( { color: 0xff00ff, wireframe: true, transparent: true, opacity: 1, side: THREE.DoubleSide } ) ;
+        //
+        // this.object = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1 ),  materials );
+        // // object = new THREE.Mesh( new THREE.SphereGeometry( 1, 16, 16 ),  materials );
+        // this.object.position.set( 0, 0.1, 0.1 );
+        // this.scene.add( this.object );
+        // this.objects3D.push(this.object);
+        // console.log("ball");
+        //
+        //
+        // var materials = new THREE.MeshBasicMaterial( { color: 0xff00ff, wireframe: true, transparent: true, opacity: 1, side: THREE.DoubleSide } ) ;
+        // this.object = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1 ),  materials );
+        // // object = new THREE.Mesh( new THREE.SphereGeometry( 1, 16, 16 ),  materials );
+        // this.object.position.set( 0, 0, 0 );
+        // this.scene.add( this.object );
+        // console.log("ball");
 
+    }
 
     animate() {
         this.scene.updateMatrixWorld();
@@ -58,20 +50,21 @@ export default class GameLoop3D {
         // TODO update objects (
         // TODO collision should be detected by peers
 
-        let length = this.objects3D.length;
-        while (length--) {
-            // if (this.collisionDetect(this.objects3D[0], [this.objects3D[1]])) {
-            //     console.log('+');
-            // } else {
-            //     console.log('-');
-            // }
-        }
+        // let length = this.objects3D.length;
+        // while (length--) {
+        //      if (collisionDetect(this.objects3D[0].children[0], this.objects3D[1].children)) {
+        //         console.log('+');
+        //     } else {
+        //         console.log('-');
+        //     }
+        // }
 
+        //works for objects not groups ?!?
         //
-        // if (this.collisionDetect(this.object, this.objects3D)){
-        //     // console.log("+")
+        // if (collisionDetect(this.object, this.objects3D)){
+        //     console.log("+")
         // }else{
-        //     // console.log("-")
+        //     console.log("-")
         // }
     }
 }

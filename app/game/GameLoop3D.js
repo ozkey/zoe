@@ -223,11 +223,11 @@ export default class GameLoopClient {
         // console.log("tick tock 2");
         this.object.rotation.x += 0.1;
         this.object.y += 0.1;
-        if (collisionDetect(this.object, this.objects)){
-             console.log("+")
-        }else{
-             console.log("-")
-        }
+        // if (collisionDetect(this.object, this.objects)){
+        //      console.log("+")
+        // }else{
+        //      console.log("-")
+        // }
     }
 
     lights() {

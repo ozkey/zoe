@@ -1,5 +1,6 @@
 import GameLoop3D from './GameLoop3D';
 import {gameDataTo3D} from '../app/game/gameHelpers/gameDataTo3D';
+import {getSector} from '../app/game/gameHelpers/gameSectors';
 
 export default class GameLoop {
 
@@ -95,15 +96,34 @@ export default class GameLoop {
 
     theLoop() {
         // http://stackoverflow.com/questions/1232040/how-do-i-empty-an-array-in-javascript
+
+
         if (this.waitForDataStage) {
             this.waitForDataStage = !this.waitForDataStage;
             // Waiting to collect data
             setTimeout(this.theLoop.bind(this), 50);
         } else {
             this.waitForDataStage = !this.waitForDataStage;
+
+            // ===Animate
+            this.gameLoop3D.animate();
+
+            // ===Sort Data per sector
+            this.gameDataSectors = {};
+            let length = this.spaceShips.length;
+            while (length--) {
+                const obj = this.spaceShips[length];
+                const sector = getSector(obj);
+                if (this.gameDataSectors[sector]) {
+                    this.gameDataSectors[sector].push(obj);
+                } else {
+                    this.gameDataSectors[sector] = [obj]; // new array
+                }
+            }
+
+
             this.frameCount ++;
 
-            this.gameLoop3D.animate();
             if (this.timePreviousReset + 1000 < this.getTime()) {
                 console.log('frames per second     ' + this.frameCount);
                 this.timePreviousReset = this.getTime();

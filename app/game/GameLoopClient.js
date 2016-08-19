@@ -7,6 +7,11 @@ export default class GameLoopClient {
 
         this.socket = require('socket.io-client')('http://localhost:3000');
 
+
+        this.socket.on('sectorData', (sectorData) => {
+            console.log("sectorData", sectorData)
+        });
+
         this.socket.on('userSettings', (data) => {
             console.log('recived userSettings', data);
             this.userSettings = data;

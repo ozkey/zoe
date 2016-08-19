@@ -1,4 +1,6 @@
 import {UP, DOWN} from '../app/game/gameHelpers/events';
+import {getSector} from '../app/game/gameHelpers/gameSectors';
+
 
 export default class GameUser {
 
@@ -8,18 +10,14 @@ export default class GameUser {
         this.sector = this.getSector(userSettings);
         this.ioRooms = [];
         this.setEvents();
-        const sector = this.getSector();
+        const sector = getSector();
         this.ioRooms.push(sector);
         socket.join(sector);
     }
 
     getSector() {
-        const sectorSize = 10000;
-        const sectorZ = this.userSettings; // depth
-        const sectorX = 0; // sides
-        return sectorZ + '.' + sectorX + '-' + (sectorZ + sectorSize) + '.' + (sectorX + sectorSize);
+        return getSector(this);
     }
-
     loopTick() {
         // TODO check if moved to new sector
         // TODO adjust socket room
@@ -35,19 +33,6 @@ export default class GameUser {
         // socket.emit('news', {hello: 'world is in io :) ' + gameLoop.getGameData()});
 
         // You don't need to maintain a list of rooms, socket.io does that for you. Simply iterate through the keys of io.sockets.manager.roomClients[socket.id] and socket.leave
-
     }
-    getSectorsSquare() {
-        // TODO
-        // send the the 3 closes squares the user may be going to
-        //   [ ][ ][ ][ ]
-        //   [ ][X][<][ ]
-        //   [ ][X][X][ ]
-        //   [ ][ ][ ][ ]
 
-        const sectorSize = 10000;
-        const sectorZ = this.userSettings; // depth
-        const sectorX = 0; // sides
-        return [sectorZ + '.' + sectorX + '-' + (sectorZ + sectorSize) + '.' + (sectorX + sectorSize)];
-    }
 }
