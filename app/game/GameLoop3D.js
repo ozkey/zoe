@@ -1,6 +1,6 @@
 let THREE = require('three');
 let Stats = require('../../node_modules/three/examples/js/libs/stats.min');
-import {collisionDetect} from './gameHelpers/collisionDetect';
+import {collisionDetect,collisionDetectGroup} from './gameHelpers/collisionDetect';
 
 
 export default class GameLoopClient {
@@ -43,24 +43,30 @@ export default class GameLoopClient {
         // ==================
         this.gameUserClient
         // ==================
+        let cube = null;
 
-        var materials = new THREE.MeshBasicMaterial( { color: 0xff00ff, wireframe: true, transparent: true, opacity: 1, side: THREE.DoubleSide } ) ;
+        var materials = new THREE.MeshBasicMaterial( { color: 0xff00ff, wireframe: true, transparent: false, opacity: 1, side: THREE.DoubleSide } ) ;
 
-        this.object = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1 ),  materials );
+         cube = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1 ),  materials );
         // object = new THREE.Mesh( new THREE.SphereGeometry( 1, 16, 16 ),  materials );
-        this.object.position.set( 0, 2, 1.1 );
+        cube.position.set( 0, 0, 0 );
+        this.object = new THREE.Group();
+        this.object.add(cube);
+        this.object.position.set( 0, 1, 1.1 );
         this.scene.add( this.object );
-        this.objects.push(this.object);
+        this.objects.push(this.object );
 
-
-
-        var materials = new THREE.MeshBasicMaterial( { color: 0xff00ff, wireframe: true, transparent: true, opacity: 1, side: THREE.DoubleSide } ) ;
-        this.object = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1 ),  materials );
-
-        this.object.position.set( 0, 2, 0 );
+        var materials = new THREE.MeshBasicMaterial( { color: 0x0000ff, wireframe: true, transparent: true, opacity: 1, side: THREE.DoubleSide } ) ;
+         cube = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1 ),  materials );
+        // object = new THREE.Mesh( new THREE.SphereGeometry( 1, 16, 16 ),  materials );
+        cube.position.set( 0, 0, 0 );
+        this.object = new THREE.Group();
+        this.object.add(cube);
+        this.object.position.set( 0, 1, 0 );
         this.scene.add( this.object );
+        //this.objects.push(this.object );
 
-        console.log("ball");
+        /// ================================
 
         this.earth();
         this.mat();
@@ -221,13 +227,13 @@ export default class GameLoopClient {
     }
     animate(data) {
         // console.log("tick tock 2");
-        this.object.rotation.x += 0.1;
-        this.object.y += 0.1;
-        // if (collisionDetect(this.object, this.objects)){
-        //      console.log("+")
-        // }else{
-        //      console.log("-")
-        // }
+        this.object.rotation.x += 0.01;
+        // this.object.y += 1;
+        if (collisionDetectGroup(this.object, this.objects[0])){
+             console.log("+")
+        }else{
+             console.log("-")
+        }
     }
 
     lights() {

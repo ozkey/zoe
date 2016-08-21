@@ -1,6 +1,6 @@
 const THREE = require('three');
 const Projector = require('../app/game/gameHelpers/Projector');
-import {collisionDetect} from '../app/game/gameHelpers/collisionDetect';
+import {collisionDetect,collisionDetectGroup} from '../app/game/gameHelpers/collisionDetect';
 
 export default class GameLoop3D {
 
@@ -49,6 +49,18 @@ export default class GameLoop3D {
 
         // TODO update objects (
         // TODO collision should be detected by peers
+
+        // let length = this.objects3D.length;
+        // if (length > 1) {
+        //     while (length--) {
+        //         if (collisionDetectGroup(this.objects3D[0], this.objects3D[1])) {
+        //             console.log('+');
+        //         } else {
+        //             console.log('-');
+        //         }
+        //     }
+        // }
+
 
         // let length = this.objects3D.length;
         // while (length--) {

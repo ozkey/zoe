@@ -23,3 +23,40 @@ export function collisionDetect(obj, collidableMeshList) {
     }
     return false;
 }
+
+
+export function collisionDetect2(obj, collidableMeshList, group1) {
+
+    const originPoint = group1.position.clone();
+
+    for (var vertexIndex = 0; vertexIndex < obj.geometry.vertices.length; vertexIndex++)
+    {
+        var localVertex = obj.geometry.vertices[vertexIndex].clone();
+        var globalVertex = localVertex.applyMatrix4( group1.matrix );
+        var directionVector = globalVertex.sub( group1.position );
+        var ray = new THREE.Raycaster( originPoint, directionVector.clone().normalize() );
+        var collisionResults = ray.intersectObjects( collidableMeshList );
+        if ( collisionResults.length > 0 && collisionResults[0].distance < directionVector.length() ){
+
+            return true;
+        }
+    }
+    return false;
+}
+
+
+export function collisionDetectGroup(group1, group2) {
+    const group1Children = group1.children;
+    let length = group1Children.length;
+
+    while (length--) {
+        if (collisionDetect2(group1Children[length], group2.children, group1)) {
+            return true;
+        }
+    }
+    return false;
+}
+
+
+
+
