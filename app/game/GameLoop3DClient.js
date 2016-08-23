@@ -40,6 +40,25 @@ export default class GameLoopClient {
         this.setupControls();
         window.addEventListener('resize', () => { this.onWindowResize(); }, false );
 
+        //
+
+
+
+        var skyGeo = new THREE.SphereGeometry(100, 25, 25);
+        var texture = THREE.ImageUtils.loadTexture(require('../images/textures/eso_dark.jpg') );
+
+
+        var material = new THREE.MeshPhongMaterial({
+            map: texture,
+        });
+
+        var sky = new THREE.Mesh(skyGeo, material);
+        sky.material.side = THREE.BackSide;
+        this.scene.add(sky);
+
+        // sky.eulerOrder = 'XZY';
+        // sky.renderDepth = 1000.0;
+
 
         // ==================
         let cube = null;
@@ -253,7 +272,7 @@ export default class GameLoopClient {
         this.bulbLight.castShadow = true;
         this.scene.add(this.bulbLight);
 
-        var light = new THREE.AmbientLight( 0x404040 ); // soft white light
+        var light = new THREE.AmbientLight( 0x606060 ); // soft white light
         this.scene.add( light );
 
 
