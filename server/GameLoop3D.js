@@ -49,7 +49,10 @@ export default class GameLoop3D {
 
         // TODO update objects (
         // TODO collision should be detected by peers
+        //
 
+
+        // NOT WORKING ON SERER ??????
         // let length = this.objects3D.length;
         // if (length > 1) {
         //     while (length--) {
@@ -62,14 +65,6 @@ export default class GameLoop3D {
         // }
 
 
-        // let length = this.objects3D.length;
-        // while (length--) {
-        //      if (collisionDetect(this.objects3D[0].children[0], this.objects3D[1].children)) {
-        //         console.log('+');
-        //     } else {
-        //         console.log('-');
-        //     }
-        // }
 
         //works for objects not groups ?!?
         //

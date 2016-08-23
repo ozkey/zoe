@@ -59,9 +59,9 @@ export default class GameLoop {
                 owner: 'ozkey.com@gmail.com',
                 weight: 10,
                 powerCunsumption: 10,
-                x: 1.01,
-                y: 1.01,
-                z: 1.01,
+                x: 1.5,
+                y: 1.5,
+                z: 1.5,
                 bluePrint: [
                     {
                         c: [0, 0, 0], // cordinates
