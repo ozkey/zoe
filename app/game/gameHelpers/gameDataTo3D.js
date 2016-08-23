@@ -9,7 +9,9 @@ export function gameDataTo3D(data, isWireframe) {
         if (isWireframe) {
             return wireframeMaterial;
         }
-        return new THREE.MeshBasicMaterial( { color: 0x112233, wireframe: false, transparent: false, opacity: 1, side: THREE.DoubleSide });
+        const texture = new THREE.TextureLoader().load(require('../../images/textures/metal.jpg'));
+        const material = new THREE.MeshBasicMaterial({ map: texture});
+        return material;
     };
 
 
