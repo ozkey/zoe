@@ -19,6 +19,8 @@ export function gameDataTo3D(data, isWireframe) {
     while (length--) {
         const object = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), getMaterial());
         object.position.set(data.bluePrint[length].c[0], data.bluePrint[length].c[1], data.bluePrint[length].c[2]);
+        object.castShadow = true;
+        object.receiveShadow = true;
         group.add(object);
     }
     group.position.set(data.x, data.y, data.z);

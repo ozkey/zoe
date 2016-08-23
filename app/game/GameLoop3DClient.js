@@ -6,6 +6,10 @@ import {collisionDetect,collisionDetectGroup} from './gameHelpers/collisionDetec
 export default class GameLoopClient {
     constructor(domContainer) {
 
+        this.cameraLimit = 1000000000;
+        this.skySpherer = 1000000000;
+        this.fogLimit = 1000;
+
         let gui = require('../../node_modules/three/examples/js/libs/dat.gui.min');
         let OrbitControls = require('./gameHelpers/OrbitControls');
         let Detector = require('./gameHelpers/Detector');
@@ -44,22 +48,6 @@ export default class GameLoopClient {
 
 
 
-        var skyGeo = new THREE.SphereGeometry(100, 25, 25);
-        var texture = THREE.ImageUtils.loadTexture(require('../images/textures/eso_dark.jpg') );
-
-
-        var material = new THREE.MeshPhongMaterial({
-            map: texture,
-        });
-
-        var sky = new THREE.Mesh(skyGeo, material);
-        sky.material.side = THREE.BackSide;
-        this.scene.add(sky);
-
-        // sky.eulerOrder = 'XZY';
-        // sky.renderDepth = 1000.0;
-
-
         // ==================
         let cube = null;
 
@@ -88,7 +76,25 @@ export default class GameLoopClient {
 
         this.earth();
         this.mat();
+
+        /// ================================
+
+        this.setupSky();
         this.animateLocal();
+    }
+
+    setupSky() {
+        var skyGeo = new THREE.SphereGeometry(this.skySpherer, 25, 25);
+        var texture = THREE.ImageUtils.loadTexture(require('../images/textures/eso_dark.jpg'));
+
+
+        var material = new THREE.MeshPhongMaterial({
+            map: texture,
+        });
+
+        var sky = new THREE.Mesh(skyGeo, material);
+        sky.material.side = THREE.BackSide;
+        this.scene.add(sky);
     }
 
     addObject(game3DObject){
@@ -97,7 +103,7 @@ export default class GameLoopClient {
 
 
     setupRenderer() {
-        this.renderer = new THREE.WebGLRenderer();
+        this.renderer = new THREE.WebGLRenderer({logarithmicDepthBuffer: true });
         this.renderer.setPixelRatio(window.devicePixelRatio);
         this.renderer.setSize(window.innerWidth, window.innerHeight);
 
@@ -272,19 +278,24 @@ export default class GameLoopClient {
         this.bulbLight.castShadow = true;
         this.scene.add(this.bulbLight);
 
-        var light = new THREE.AmbientLight( 0x606060 ); // soft white light
+        var light = new THREE.AmbientLight( 0x303030 ); // soft white light
         this.scene.add( light );
 
 
-        this.scene.fog = new THREE.Fog( 0x000000, 1, 2000 );
+        // this.scene.fog = new THREE.Fog( 0x000000, 2 , this.fogLimit );
     }
 
 
     setCamera() {
-//        camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 1, 1000);
-//        camera.position.z = 40;
 
-        this.camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 0.1, 1000 );
+        const NEAR = 1e-6;
+        const  FAR = 1e27;
+        const SCREEN_WIDTH = window.innerWidth;
+        const SCREEN_HEIGHT = window.innerHeight;
+
+        this.camera = new THREE.PerspectiveCamera( 50, SCREEN_WIDTH / SCREEN_HEIGHT, NEAR,  this.cameraLimit  );
+
+        // this.camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 0.1,);
         this.camera.position.x = -4;
         this.camera.position.z = 4;
         this.camera.position.y = 3;
@@ -314,11 +325,13 @@ export default class GameLoopClient {
             ballMat.needsUpdate = true;
         });
 
-        var ballGeometry = new THREE.SphereGeometry(0.1213, 32, 32);
+        const earthRadius = 6371000;
+        var ballGeometry = new THREE.SphereGeometry(earthRadius, 32, 32);
         var ballMesh = new THREE.Mesh(ballGeometry, ballMat);
-        ballMesh.position.set(1, 0.1213, 1);
+        ballMesh.position.set(earthRadius*2, earthRadius , earthRadius*2);
         ballMesh.castShadow = true;
         this.scene.add(ballMesh);
+
     }
 
     statsBox() {
