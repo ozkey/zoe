@@ -47,7 +47,7 @@ export default class GameLoop {
                         m: 'metal1'   // material
                     },
                     {
-                        c: [1, 1, 1], // cordinates
+                        c: [1, 0, 0], // cordinates
                         m: 'metal1'   // material
                     },
                 ]
@@ -59,24 +59,24 @@ export default class GameLoop {
                 owner: 'ozkey.com@gmail.com',
                 weight: 10,
                 powerCunsumption: 10,
-                x: 1.5,
-                y: 1.5,
-                z: 1.5,
+                x: 4,
+                y: 4,
+                z: 4,
                 bluePrint: [
                     {
                         c: [0, 0, 0], // cordinates
                         m: 'metal1'   // material
                     },
                     {
-                        c: [1, 0, 1], // cordinates
+                        c: [1, 0, 1], // cordinates //back right
                         m: 'metal1'   // material
                     },
                     {
-                        c: [1, 0, -1], // cordinates
+                        c: [1, 0, -1], // cordinates //back left
                         m: 'metal1'   // material
                     },
                     {
-                        c: [1, 1, 1], // cordinates
+                        c: [1, 0, 0], // cordinates //back
                         m: 'metal1'   // material
                     },
                 ]

@@ -12,12 +12,13 @@ export function gameDataTo3D(data, isWireframe) {
         return new THREE.MeshBasicMaterial( { color: 0x112233, wireframe: false, transparent: false, opacity: 1, side: THREE.DoubleSide });
     };
 
-    const object = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), getMaterial());
 
-
-    console.log('data.bluePrint[0]', data.bluePrint);
-    object.position.set(data.bluePrint[0].c[0], data.bluePrint[0].c[1], data.bluePrint[0].c[2]);
-    group.add(object);
+    let length = data.bluePrint.length
+    while (length--) {
+        const object = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), getMaterial());
+        object.position.set(data.bluePrint[length].c[0], data.bluePrint[length].c[1], data.bluePrint[length].c[2]);
+        group.add(object);
+    }
     group.position.set(data.x, data.y, data.z);
 
     return group;
