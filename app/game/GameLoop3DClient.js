@@ -4,8 +4,8 @@ import {collisionDetect,collisionDetectGroup} from './gameHelpers/collisionDetec
 
 
 export default class GameLoopClient {
-    constructor(domContainer, user) {
-        this.gameUserClient = user;
+    constructor(domContainer) {
+
         let gui = require('../../node_modules/three/examples/js/libs/dat.gui.min');
         let OrbitControls = require('./gameHelpers/OrbitControls');
         let Detector = require('./gameHelpers/Detector');
@@ -40,8 +40,7 @@ export default class GameLoopClient {
         this.setupControls();
         window.addEventListener('resize', () => { this.onWindowResize(); }, false );
 
-        // ==================
-        this.gameUserClient
+
         // ==================
         let cube = null;
 
@@ -72,6 +71,11 @@ export default class GameLoopClient {
         this.mat();
         this.animateLocal();
     }
+
+    addObject(game3DObject){
+        this.scene.add(game3DObject);
+    }
+
 
     setupRenderer() {
         this.renderer = new THREE.WebGLRenderer();
@@ -230,9 +234,9 @@ export default class GameLoopClient {
         this.object.rotation.x += 0.01;
         // this.object.y += 1;
         if (collisionDetectGroup(this.object, this.objects[0])){
-             console.log("+")
-        }else{
-             console.log("-")
+        //      console.log("+")
+        // }else{
+        //      console.log("-")
         }
     }
 

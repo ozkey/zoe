@@ -52,17 +52,17 @@ export default class GameLoop3D {
         //
 
 
-        // NOT WORKING ON SERER ??????
-        // let length = this.objects3D.length;
-        // if (length > 1) {
-        //     while (length--) {
-        //         if (collisionDetectGroup(this.objects3D[0], this.objects3D[1])) {
-        //             console.log('+');
-        //         } else {
-        //             console.log('-');
-        //         }
-        //     }
-        // }
+        // WORKING ON SERER TOO
+        let length = this.objects3D.length;
+        if (length > 1) {
+            while (length--) {
+                if (collisionDetectGroup(this.objects3D[0], this.objects3D[1])) {
+                    console.log('+');
+                } else {
+                    console.log('-');
+                }
+            }
+        }
 
 
 

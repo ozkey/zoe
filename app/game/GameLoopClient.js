@@ -1,5 +1,6 @@
-import GameLoop3D from './GameLoop3D';
+import GameLoop3DClient from './GameLoop3DClient';
 import GameUserClient from './GameUserClient';
+import {gameDataTo3D} from './gameHelpers/gameDataTo3D';
 
 export default class GameLoopClient {
     constructor(DOMcontainer) {
@@ -7,16 +8,27 @@ export default class GameLoopClient {
 
         this.socket = require('socket.io-client')('http://localhost:3000');
 
+        this.GameLoop3DClient = new GameLoop3DClient(this.container);
 
         this.socket.on('sectorData', (sectorData) => {
-            console.log("sectorData", sectorData)
+
+
+            let length = sectorData.length;
+            while (length --) {
+                const spaceShipBluePrint = sectorData[length];
+                console.log('add spaceShip', length, spaceShipBluePrint);
+
+                const spaceship3dObject = gameDataTo3D(spaceShipBluePrint, false);
+                // this.spaceShips.push(spaceShip);
+                this.GameLoop3DClient.addObject(spaceship3dObject);
+            }
+            // End loop
         });
 
         this.socket.on('userSettings', (data) => {
             console.log('recived userSettings', data);
             this.userSettings = data;
             this.gameUser = new GameUserClient(this.userSettings, this.socket);
-            this.gameLoop3D = new GameLoop3D(this.container, this.gameUser);
             this.startTicking = true;
         });
 
@@ -26,14 +38,14 @@ export default class GameLoopClient {
 
 
             // Let the game update the data and animate at the same time (one loop pass)
-            if (this.startTicking) this.gameLoop3D.animate(data);
+            if (this.startTicking) this.GameLoop3DClient.animate(data);
         });
     }
 
     destroy() {
         // var container = document.getElementById( 'container' ).innerHTML = "";
         this.container.innerHTML = '';
-        this.gameLoop3D.destroy();
+        this.GameLoop3DClient.destroy();
         this.startTicking = false;
         console.log('close game');
         // this.socket.emit('close');
