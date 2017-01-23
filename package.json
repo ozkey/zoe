@@ -19,8 +19,7 @@
     "test": "cross-env NODE_ENV=test karma start",
     "test:watch": "cross-env NODE_ENV=test npm test -- --watch --no-single-run",
     "postinstall": "npm run build",
-    "db": "C:/MongoDB/Server/3.2/bin/mongod --dbpath C:/MongoDBdata/",
-    "db2": "C:/mongodb/bin/mongod --dbpath C:/MongoDBdata/"
+    "db": "C:/mongodb/bin/mongod --dbpath C:/MongoDBdata/"
 
 
   },

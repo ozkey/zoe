@@ -1,19 +1,21 @@
 let THREE = require('three');
 let Stats = require('../../node_modules/three/examples/js/libs/stats.min');
+import {collisionDetect,collisionDetectGroup} from './gameHelpers/collisionDetect';
+
 
 export default class GameLoopClient {
+    constructor(domContainer) {
 
-
-
-    constructor(obj) {
+        this.cameraLimit = 1000000000;
+        this.skySpherer = 1000000000;
+        this.fogLimit = 1000;
 
         let gui = require('../../node_modules/three/examples/js/libs/dat.gui.min');
-        let OrbitControls = require('../gameHelpers/OrbitControls');
-        let Detector = require('../gameHelpers/Detector');
+        let OrbitControls = require('./gameHelpers/OrbitControls');
+        let Detector = require('./gameHelpers/Detector');
 
         this.destroyed = false; //to stop frame animation
-
-        this.container = obj;
+        this.container = domContainer;
 
         this.stats;
         this.clock = new THREE.Clock();
@@ -30,7 +32,7 @@ export default class GameLoopClient {
 
         this.group = new THREE.Group();
         this.mesh;
-        this.objects= [];
+        this.objects=[];
         this.object;
         this.bulbLight;
 
@@ -40,35 +42,68 @@ export default class GameLoopClient {
         this.lights();
         this.statsBox();
         this.setupControls();
-        window.addEventListener( 'resize', this.onWindowResize, false );
+        window.addEventListener('resize', () => { this.onWindowResize(); }, false );
 
-        //==================
+        //
 
-        var materials = new THREE.MeshBasicMaterial( { color: 0xff00ff, wireframe: true, transparent: true, opacity: 1, side: THREE.DoubleSide } ) ;
 
-        this.object = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1 ),  materials );
+
+        // ==================
+        let cube = null;
+
+        var materials = new THREE.MeshBasicMaterial( { color: 0xff00ff, wireframe: true, transparent: false, opacity: 1, side: THREE.DoubleSide } ) ;
+
+         cube = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1 ),  materials );
         // object = new THREE.Mesh( new THREE.SphereGeometry( 1, 16, 16 ),  materials );
-        this.object.position.set( 0, 2, 1.1 );
+        cube.position.set( 0, 0, 0 );
+        this.object = new THREE.Group();
+        this.object.add(cube);
+        this.object.position.set( 0, 1, 1.1 );
         this.scene.add( this.object );
-        this.objects.push(this.object);
+        this.objects.push(this.object );
 
-
-
-        var materials = new THREE.MeshBasicMaterial( { color: 0xff00ff, wireframe: true, transparent: true, opacity: 1, side: THREE.DoubleSide } ) ;
-        this.object = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1 ),  materials );
-
-        this.object.position.set( 0, 2, 0 );
+        var materials = new THREE.MeshBasicMaterial( { color: 0x0000ff, wireframe: true, transparent: true, opacity: 1, side: THREE.DoubleSide } ) ;
+         cube = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1 ),  materials );
+        // object = new THREE.Mesh( new THREE.SphereGeometry( 1, 16, 16 ),  materials );
+        cube.position.set( 0, 0, 0 );
+        this.object = new THREE.Group();
+        this.object.add(cube);
+        this.object.position.set( 0, 1, 0 );
         this.scene.add( this.object );
+        //this.objects.push(this.object );
 
-        console.log("ball");
+        /// ================================
 
         this.earth();
         this.mat();
+
+        /// ================================
+
+        this.setupSky();
         this.animateLocal();
     }
 
+    setupSky() {
+        var skyGeo = new THREE.SphereGeometry(this.skySpherer, 25, 25);
+        var texture = THREE.ImageUtils.loadTexture(require('../images/textures/eso_dark.jpg'));
+
+
+        var material = new THREE.MeshPhongMaterial({
+            map: texture,
+        });
+
+        var sky = new THREE.Mesh(skyGeo, material);
+        sky.material.side = THREE.BackSide;
+        this.scene.add(sky);
+    }
+
+    addObject(game3DObject){
+        this.scene.add(game3DObject);
+    }
+
+
     setupRenderer() {
-        this.renderer = new THREE.WebGLRenderer();
+        this.renderer = new THREE.WebGLRenderer({logarithmicDepthBuffer: true });
         this.renderer.setPixelRatio(window.devicePixelRatio);
         this.renderer.setSize(window.innerWidth, window.innerHeight);
 
@@ -181,7 +216,7 @@ export default class GameLoopClient {
             ballMat.needsUpdate = true;
         });
 
-        var ballGeometry = new THREE.SphereGeometry(1, 32, 32);
+        var ballGeometry = new THREE.SphereGeometry(.1, 32, 32);
 
 
 
@@ -215,18 +250,18 @@ export default class GameLoopClient {
         this.destroyed = true;
     }
     animateLocal(){
-        if(!this.destroyed) requestAnimationFrame( this.animateLocal.bind(this) );
+        if (!this.destroyed) requestAnimationFrame( this.animateLocal.bind(this) );
         this.render();
         // console.log("render?");
     }
     animate(data) {
         // console.log("tick tock 2");
-        this.object.rotation.x += 0.1;
-        this.object.y += 0.1;
-        if (this.collisionDetect(this.object, this.objects)){
-            // console.log("+")
-        }else{
-            // console.log("-")
+        this.object.rotation.x += 0.01;
+        // this.object.y += 1;
+        if (collisionDetectGroup(this.object, this.objects[0])){
+        //      console.log("+")
+        // }else{
+        //      console.log("-")
         }
     }
 
@@ -243,19 +278,24 @@ export default class GameLoopClient {
         this.bulbLight.castShadow = true;
         this.scene.add(this.bulbLight);
 
-        var light = new THREE.AmbientLight( 0x404040 ); // soft white light
+        var light = new THREE.AmbientLight( 0x303030 ); // soft white light
         this.scene.add( light );
 
 
-        this.scene.fog = new THREE.Fog( 0x000000, 1, 2000 );
+        // this.scene.fog = new THREE.Fog( 0x000000, 2 , this.fogLimit );
     }
 
 
     setCamera() {
-//        camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 1, 1000);
-//        camera.position.z = 40;
 
-        this.camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 0.1, 1000 );
+        const NEAR = 1e-6;
+        const  FAR = 1e27;
+        const SCREEN_WIDTH = window.innerWidth;
+        const SCREEN_HEIGHT = window.innerHeight;
+
+        this.camera = new THREE.PerspectiveCamera( 50, SCREEN_WIDTH / SCREEN_HEIGHT, NEAR,  this.cameraLimit  );
+
+        // this.camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 0.1,);
         this.camera.position.x = -4;
         this.camera.position.z = 4;
         this.camera.position.y = 3;
@@ -285,11 +325,13 @@ export default class GameLoopClient {
             ballMat.needsUpdate = true;
         });
 
-        var ballGeometry = new THREE.SphereGeometry(0.1213, 32, 32);
+        const earthRadius = 6371000;
+        var ballGeometry = new THREE.SphereGeometry(earthRadius, 32, 32);
         var ballMesh = new THREE.Mesh(ballGeometry, ballMat);
-        ballMesh.position.set(1, 0.1213, 1);
+        ballMesh.position.set(earthRadius*2, earthRadius , earthRadius*2);
         ballMesh.castShadow = true;
         this.scene.add(ballMesh);
+
     }
 
     statsBox() {
@@ -312,30 +354,6 @@ export default class GameLoopClient {
         this.mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
     }
 
-    collisionDetect(obj,collidableMeshList){
-
-        // collision detection:
-        //   determines if any of the rays from the cube's origin to each vertex
-        //		intersects any face of a mesh in the array of target meshes
-        //   for increased collision accuracy, add more vertices to the cube;
-        //		for example, new THREE.CubeGeometry( 64, 64, 64, 8, 8, 8, wireMaterial )
-        //   HOWEVER: when the origin of the ray is within the target mesh, collisions do not occur
-        var originPoint = obj.position.clone();
-
-        for (var vertexIndex = 0; vertexIndex < obj.geometry.vertices.length; vertexIndex++)
-        {
-            var localVertex = obj.geometry.vertices[vertexIndex].clone();
-            var globalVertex = localVertex.applyMatrix4( obj.matrix );
-            var directionVector = globalVertex.sub( obj.position );
-            var ray = new THREE.Raycaster( originPoint, directionVector.clone().normalize() );
-            var collisionResults = ray.intersectObjects( collidableMeshList );
-            if ( collisionResults.length > 0 && collisionResults[0].distance < directionVector.length() )
-            {
-                return true;
-            }
-        }
-        return false;
-    }
 
 
 
@@ -344,7 +362,11 @@ export default class GameLoopClient {
         this.camera.updateProjectionMatrix();
         this.renderer.setSize( window.innerWidth, window.innerHeight );
     }
-
 }
 
 
+//
+// GameLoopClient.propTypes = {
+//     user: PropTypes.object,
+//
+// };

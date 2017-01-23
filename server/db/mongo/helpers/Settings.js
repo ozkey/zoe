@@ -16,14 +16,13 @@ export default class Settings {
             callback(data);
         });
     }
-    create(email) {
+    create(email, callback) {
         const query = {email, text: 'welcome to the game'};
         settings.create(query, (err, data) => {
             if (err) {
-                console.log(err);
-                return undefined;
+                callback(null);
             }
-            return data;
+            callback(data);
         });
     }
     remove(id) {
@@ -46,7 +45,5 @@ export default class Settings {
             }
             return true;
         });
-
     }
 }
-
