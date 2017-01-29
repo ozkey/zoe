@@ -15,7 +15,7 @@ export function gameDataTo3D(data, isWireframe) {
     };
 
 
-    let length = data.bluePrint.length
+    let length = data.bluePrint.length;
     while (length--) {
         const object = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), getMaterial());
         object.position.set(data.bluePrint[length].c[0], data.bluePrint[length].c[1], data.bluePrint[length].c[2]);

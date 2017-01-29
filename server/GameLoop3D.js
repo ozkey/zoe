@@ -20,12 +20,39 @@ export default class GameLoop3D {
         this.scene.add(game3DObject);
     }
 
-    animate() {
+    animateSpaceShips(spaceShips) {
         this.scene.updateMatrixWorld();
 
         // TODO update objects (
         // TODO collision should be detected by peers
         //
+
+
+
+        // moving objects
+        // let length = spaceShips.length;
+        // if (length > 1) {
+        //     while (length--) {
+        //         spaceShips[length].x = 5;
+        //         spaceShips[length].y = 5;
+        //         spaceShips[length].z = 5;
+        //         spaceShips[length].oblect3d.position.set(spaceShips[length].x, spaceShips[length].y, spaceShips[length].z);
+        //     }
+        // }
+
+
+        let length = this.objects3D.length;
+        if (length > 1) {
+            while (length--) {
+                if (this.objects3D[length].spaceShip) {
+                    let spaceShip = this.objects3D[length].spaceShip;
+                    spaceShip.x = 5;
+                    spaceShip.y = 5;
+                    spaceShip.z = 5;
+                    this.objects3D[length].position.set(spaceShip.x, spaceShip.y, spaceShip.z);
+                }
+            }
+        }
 
 
         // WORKING ON SERER TOO

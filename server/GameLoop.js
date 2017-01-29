@@ -33,6 +33,7 @@ export default class GameLoop {
                 x: 1,
                 y: 1,
                 z: 1,
+                velocity:[0,0.1,0],
                 bluePrint: [
                     {
                         c: [0, 0, 0], // cordinates
@@ -62,6 +63,7 @@ export default class GameLoop {
                 x: 4,
                 y: 4,
                 z: 4,
+                velocity:[0,0,0],
                 bluePrint: [
                     {
                         c: [0, 0, 0], // cordinates
@@ -79,6 +81,11 @@ export default class GameLoop {
                         c: [1, 0, 0], // cordinates //back
                         m: 'metal1'   // material
                     },
+                    {
+                        c: [0, 1, 0], // cordinates
+                        m: 'metal1'   // material
+                    },
+
                 ]
             }
         );
@@ -106,7 +113,7 @@ export default class GameLoop {
             this.waitForDataStage = !this.waitForDataStage;
 
             // ===Animate
-            this.gameLoop3D.animate();
+            this.gameLoop3D.animateSpaceShips(this.spaceShips);
 
             // ===Sort Data per sector
             this.gameDataSectors = {};
@@ -139,7 +146,9 @@ export default class GameLoop {
     }
     addSpaceShip(spaceShip) {
         this.spaceShips.push(spaceShip);
-        this.gameLoop3D.addObject(gameDataTo3D(spaceShip,true));
+        let object3D = gameDataTo3D(spaceShip,true);
+        this.gameLoop3D.addObject(object3D);
+        object3D.spaceShip = spaceShip;
     }
     addSpaceStation(spaceStation) {
         this.spaceStations.push(spaceStation);
