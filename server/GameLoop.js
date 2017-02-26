@@ -15,6 +15,7 @@ export default class GameLoop {
 
         this.users = [];
         this.spaceShips = [];
+        this.spaceShipsObj = [];
         this.spaceStations = [];
 
         this.gameDataSectors = {t:'todo'}; // To send partial data (io room selection)
@@ -146,9 +147,13 @@ export default class GameLoop {
     }
     addSpaceShip(spaceShip) {
         this.spaceShips.push(spaceShip);
+
         let object3D = gameDataTo3D(spaceShip,true);
         this.gameLoop3D.addObject(object3D);
         object3D.spaceShip = spaceShip;
+
+        this.spaceShipsObj.push(object3D);
+
     }
     addSpaceStation(spaceStation) {
         this.spaceStations.push(spaceStation);
