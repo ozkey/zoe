@@ -1,4 +1,4 @@
-import GameLoop3D from './GameLoop3D';
+import GameLoop3D from './GameLoop3dServer';
 import {gameDataTo3D} from '../gameHelpers/gameDataTo3D';
 import {getSector} from '../gameHelpers/gameSectors';
 
