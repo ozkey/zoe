@@ -4,7 +4,7 @@ import { ENV } from './config/appConfig';
 import { connect } from './db';
 import passportConfig from './config/passport';
 import expressConfig from './config/express';
-import IoConfig from './config/IoConfig';
+import IoConfig from '../app/game/gameServer/IoConfig';
 import routesConfig from './config/routes';
 import webpackDevConfig from '../webpack/webpack.config.dev-client';
 const App = require('../public/assets/server');
@@ -54,7 +54,7 @@ server.listen(app.get('port'), (error) => {
     }
 });
 
-import GameLoop from './GameLoop';
+import GameLoop from '../app/game/gameServer/GameLoop';
 
 const gameLoop = new GameLoop(); // eslint-disable-line
 const ioConfig = new IoConfig(io, session, gameLoop);  // eslint-disable-line

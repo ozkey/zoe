@@ -1,5 +1,5 @@
-import {UP, DOWN} from '../app/game/gameHelpers/events';
-import {getSector} from '../app/game/gameHelpers/gameSectors';
+import {UP, DOWN} from '../gameHelpers/events';
+import {getSector} from '../gameHelpers/gameSectors';
 
 
 export default class GameUser {

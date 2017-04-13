@@ -1,6 +1,6 @@
-import deserializeUser from '../db/mongo/passport/deserializeUser';
-import Settings from '../db/mongo/helpers/Settings';
-import GameUser from './../GameUser';
+import deserializeUser from '../../../server/db/mongo/passport/deserializeUser';
+import Settings from '../../../server/db/mongo/helpers/Settings';
+import GameUser from './GameUser';
 // import {UP, DOWN, FOWARD, BACK, RIGHT, LEFT, ROL_RIGHT, ROL_LEFT} from '../../app/gameHelpers/events';
 
 export default class IoConfig {

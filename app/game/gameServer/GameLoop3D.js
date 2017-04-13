@@ -1,6 +1,6 @@
 const THREE = require('three');
-const Projector = require('../app/game/gameHelpers/Projector');
-import {collisionDetectGroup} from '../app/game/gameHelpers/collisionDetect';
+const Projector = require('../gameHelpers/Projector');
+import {collisionDetectGroup} from '../gameHelpers/collisionDetect';
 
 export default class GameLoop3D {
 
