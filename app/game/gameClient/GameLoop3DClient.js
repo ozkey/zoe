@@ -1,6 +1,6 @@
 let THREE = require('three');
-let Stats = require('../../node_modules/three/examples/js/libs/stats.min');
-import {collisionDetect,collisionDetectGroup} from './gameHelpers/collisionDetect';
+let Stats = require('../../../node_modules/three/examples/js/libs/stats.min.js');
+import {collisionDetect,collisionDetectGroup} from '../gameHelpers/collisionDetect';
 
 
 export default class GameLoopClient {
@@ -10,9 +10,9 @@ export default class GameLoopClient {
         this.skySpherer = 1000000000;
         this.fogLimit = 1000;
 
-        let gui = require('../../node_modules/three/examples/js/libs/dat.gui.min');
-        let OrbitControls = require('./gameHelpers/OrbitControls');
-        let Detector = require('./gameHelpers/Detector');
+        let gui = require('../../../node_modules/three/examples/js/libs/dat.gui.min.js');
+        let OrbitControls = require('./../gameHelpers/OrbitControls');
+        let Detector = require('./../gameHelpers/Detector');
 
         this.destroyed = false; //to stop frame animation
         this.container = domContainer;
@@ -85,7 +85,7 @@ export default class GameLoopClient {
 
     setupSky() {
         var skyGeo = new THREE.SphereGeometry(this.skySpherer, 25, 25);
-        var texture = THREE.ImageUtils.loadTexture(require('../images/textures/eso_dark.jpg'));
+        var texture = THREE.ImageUtils.loadTexture(require('../../images/textures/eso_dark.jpg'));
 
 
         var material = new THREE.MeshPhongMaterial({
@@ -159,7 +159,7 @@ export default class GameLoopClient {
             side: THREE.DoubleSide
         });
         var textureLoader = new THREE.TextureLoader();
-        textureLoader.load(require('../images/textures/hardwood2_diffuse.jpg'), function( map ) {
+        textureLoader.load(require('../../images/textures/hardwood2_diffuse.jpg'), function(map ) {
             map.wrapS = THREE.RepeatWrapping;
             map.wrapT = THREE.RepeatWrapping;
             map.anisotropy = 4;
@@ -167,7 +167,7 @@ export default class GameLoopClient {
             floorMat.map = map;
             floorMat.needsUpdate = true;
         } );
-        textureLoader.load(require('../images/textures/hardwood2_bump.jpg'), function( map ) {
+        textureLoader.load(require('../../images/textures/hardwood2_bump.jpg'), function(map ) {
             map.wrapS = THREE.RepeatWrapping;
             map.wrapT = THREE.RepeatWrapping;
             map.anisotropy = 4;
@@ -175,7 +175,7 @@ export default class GameLoopClient {
             floorMat.bumpMap = map;
             floorMat.needsUpdate = true;
         } );
-        textureLoader.load(require('../images/textures/hardwood2_roughness.jpg'), function( map ) {
+        textureLoader.load(require('../../images/textures/hardwood2_roughness.jpg'), function(map ) {
             map.wrapS = THREE.RepeatWrapping;
             map.wrapT = THREE.RepeatWrapping;
             map.anisotropy = 4;
@@ -199,7 +199,7 @@ export default class GameLoopClient {
         });
 
         var textureLoader = new THREE.TextureLoader();
-        textureLoader.load(require('../images/textures/earth_atmos_2048.jpg'), function (map) {
+        textureLoader.load(require('../../images/textures/earth_atmos_2048.jpg'), function (map) {
             map.wrapS = THREE.RepeatWrapping;
             map.wrapT = THREE.RepeatWrapping;
             map.anisotropy = 4;
@@ -207,7 +207,7 @@ export default class GameLoopClient {
             ballMat.map = map;
             ballMat.needsUpdate = true;
         });
-        textureLoader.load(require('../images/textures/earth_specular_2048.jpg'), function (map) {
+        textureLoader.load(require('../../images/textures/earth_specular_2048.jpg'), function (map) {
             map.wrapS = THREE.RepeatWrapping;
             map.wrapT = THREE.RepeatWrapping;
             map.anisotropy = 4;
@@ -308,7 +308,7 @@ export default class GameLoopClient {
         });
 
         var textureLoader = new THREE.TextureLoader();
-        textureLoader.load(require('../images/textures/earth_atmos_2048.jpg'), function (map) {
+        textureLoader.load(require('../../images/textures/earth_atmos_2048.jpg'), function (map) {
             map.wrapS = THREE.RepeatWrapping;
             map.wrapT = THREE.RepeatWrapping;
             map.anisotropy = 4;
@@ -316,7 +316,7 @@ export default class GameLoopClient {
             ballMat.map = map;
             ballMat.needsUpdate = true;
         });
-        textureLoader.load(require('../images/textures/earth_specular_2048.jpg'), function (map) {
+        textureLoader.load(require('../../images/textures/earth_specular_2048.jpg'), function (map) {
             map.wrapS = THREE.RepeatWrapping;
             map.wrapT = THREE.RepeatWrapping;
             map.anisotropy = 4;

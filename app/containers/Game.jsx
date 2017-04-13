@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import classNames from 'classnames/bind';
-import GameLoopClient from '../game/GameLoopClient';
+import GameLoopClient from '../game/gameClient/GameLoopClient';
 
 
 import { fetchGameObjects, destroyGameObject,createGameObject } from 'actions/game';

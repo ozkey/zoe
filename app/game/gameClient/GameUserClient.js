@@ -1,4 +1,4 @@
-import {UP, DOWN} from './gameHelpers/events';
+import {UP, DOWN} from '../gameHelpers/events';
 
 export default class GameUser {
 

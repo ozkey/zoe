@@ -1,6 +1,6 @@
 import GameLoop3DClient from './GameLoop3DClient';
 import GameUserClient from './GameUserClient';
-import {gameDataTo3D} from './gameHelpers/gameDataTo3D';
+import {gameDataTo3D} from '../gameHelpers/gameDataTo3D';
 
 export default class GameLoopClient {
     constructor(DOMcontainer) {
